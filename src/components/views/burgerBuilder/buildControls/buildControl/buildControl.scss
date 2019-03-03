@@ -1,0 +1,98 @@
+.buildControl {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.buildControl button {
+  display: block;
+  font: inherit;
+  padding: 5px;
+  margin: 0 5px;
+  width: 80px;
+  border: 1px solid #AA6817;
+  cursor: pointer;
+  outline: none;
+}
+
+.buildControl button:disabled {
+  background-color: #AC9980;
+  border: 1px solid #7E7365;
+  color: #ccc;
+  cursor: default;
+}
+
+.buildControl button:hover:disabled {
+  background-color: #AC9980;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.label {
+  padding: 10px;
+  font-weight: bold;
+  width: 80px;
+}
+
+.buildControl .less {
+  background-color: #D39952;
+  color: white;
+}
+
+.buildControl .more {
+  background-color: #8F5E1E;
+  color: white;
+}
+
+.buildControl .less:hover, .buildControl .less:active {
+  background-color: #DAA972;
+  color: white;
+}
+
+.buildControl .more:hover,.buildControl .more:active {
+  background-color: #99703F;
+  color: white;
+}
+
+
+.orderButton {
+  background-color: #DAD735;
+  outline: none;
+  cursor: pointer;
+  border: 1px solid #966909;
+  color: #966909;
+  font-family: inherit;
+  font-size: 1.2em;
+  padding: 15px 30px;
+  box-shadow: 2px 2px 2px #966909;
+}
+
+.orderButton:hover, .orderButton:active {
+  background-color: #A0DB41;
+  border: 1px solid #966909;
+  color: #966909;
+}
+
+.orderButton:disabled {
+  background-color: #C7C6C6;
+  cursor: not-allowed;
+  border: 1px solid #ccc;
+  color: #888888;
+}
+
+.orderButton:not(:disabled) {
+  animation: enable 0.3s linear;
+}
+
+@keyframes enable {
+  0% {
+      transform: scale(1);
+  }
+  60% {
+      transform: scale(1.1);
+  }
+  100% {
+      transform: scale(1);
+  }
+}
