@@ -30,7 +30,7 @@ export default (state = inistialState, action) => {
                     ...state.ingredients,
                     [action.ingredientName]: state.ingredients[action.ingredientName] + 1
                 },
-                totalPrice: state.totalPrice + INGREDIENTS_PRICES[action.ingredientName]
+                totalPrice: state.totalPrice + INGREDIENTS_PRICES[action.ingredientName.toUpperCase()]
             };
         case actionTypes.REMOVE_INGREDIENT:
             return {
@@ -39,7 +39,7 @@ export default (state = inistialState, action) => {
                     ...state.ingredients,
                     [action.ingredientName]: state.ingredients[action.ingredientName] - 1
                 },
-                totalPrice: state.totalPrice - INGREDIENTS_PRICES[action.ingredientName]
+                totalPrice: state.totalPrice - INGREDIENTS_PRICES[action.ingredientName.toUpperCase()]
             };
         default:
             return state;
