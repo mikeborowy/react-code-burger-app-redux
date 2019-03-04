@@ -1,5 +1,5 @@
 import tv4 from 'tv4';
-import stateSchema from '../constants/stateSchema';
+import stateSchema from '../../constants/stateSchema';
 
 export default ({ dispatch, getState }) => (next) => (action) => {
     next(action);

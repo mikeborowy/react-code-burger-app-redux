@@ -7,7 +7,7 @@ const BuildControls = (props) => {
 
     const orderBtnProps = {
         className: styles.orderButton,
-        disabled: !props.isPurchasable,
+        disabled: !props.purchasable,
         onClick: props.onPurchase
     }
 
