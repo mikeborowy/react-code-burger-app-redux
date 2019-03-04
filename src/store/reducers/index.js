@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
-import order from './order';
+import burger from './burger';
 
 export default combineReducers({
-    order,
+    burger,
 });

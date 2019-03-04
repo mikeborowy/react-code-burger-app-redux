@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
     onAddIngredient,
-    onRemoveIngredient
-} from '../../../store/reducers/order';
+    onRemoveIngredient,
+    onGetIngredientsAPI
+} from '../../../store/reducers/burger';
 // HOC
 import Aux from '../../hoc/aux/Aux';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -25,16 +26,11 @@ class BurgerBuilder extends Component {
 
     state = {
         isPurchasing: false,
-        isLoading: false,
-        error: false,
+        isLoading: false
     }
 
     componentDidMount() {
-        // burgerAPI.get('https://react-burger-app-617db.firebaseio.com/ingredients.json')
-        //     .then(response => {
-        //         const ingredients = response.data;
-        //         this.setState({ ingredients })
-        //     })
+        this.props.onGetIngredientsAPI();
     }
 
     /**
@@ -79,10 +75,6 @@ class BurgerBuilder extends Component {
 
     renderSummaryModal = () => {
         const {
-            isLoading,
-        } = this.state;
-
-        const {
             ingredients,
             totalPrice
         } = this.props;
@@ -94,16 +86,12 @@ class BurgerBuilder extends Component {
             onPurchaseCancel: this.purchaseCanceldHandler
         }
 
-        const modalBody = (isLoading || !ingredients)
-            ? <Spinner />
-            : <OrderModal {...orderModalProps} />
-
         return (
             <Modal
                 isOpen={this.state.isPurchasing}
                 onClose={this.purchaseCanceldHandler}
             >
-                {modalBody}
+                <OrderModal {...orderModalProps} />
             </Modal>
         )
     }
@@ -111,7 +99,8 @@ class BurgerBuilder extends Component {
     renderBurger = () => {
         const {
             ingredients,
-            totalPrice
+            totalPrice,
+            error
         } = this.props;
 
         const burgerProps = {
@@ -119,7 +108,7 @@ class BurgerBuilder extends Component {
         }
 
         const buildControlsProps = {
-            purchasable: this.updatePurchaseHandler(this.props.ingredients),
+            purchasable: this.updatePurchaseHandler(ingredients),
             totalPrice,
             disabled: this.chckIfDisabled(),
             onAddIngredient: this.props.onAddIngredient,
@@ -133,7 +122,7 @@ class BurgerBuilder extends Component {
 
         return (
             <Aux>
-                <Burger {...burgerProps}/>
+                {!error ? <Burger {...burgerProps}/> : <p>Error has occured</p>}
                 <BuildControls {...buildControlsProps}/>
             </Aux>
         );
@@ -152,14 +141,16 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        ingredients: state.order.ingredients,
-        totalPrice: state.order.totalPrice,
+        ingredients: state.burger.ingredients,
+        totalPrice: state.burger.totalPrice,
+        error: state.burger.error,
     }
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     onAddIngredient,
-    onRemoveIngredient
+    onRemoveIngredient,
+    onGetIngredientsAPI
 }, dispatch);
 
 const BurgerBuilderWithError = withErrorHandler(BurgerBuilder, burgerAPI);

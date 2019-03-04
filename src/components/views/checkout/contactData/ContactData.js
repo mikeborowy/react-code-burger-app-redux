@@ -21,7 +21,6 @@ class ContactData extends Component {
         formIsValid: false,
         isLoading: false
     }
-
     orderHandler = (evt) => {
         evt.preventDefault();
         this.setState({ isLoading: true });
