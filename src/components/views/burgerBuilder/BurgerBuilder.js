@@ -46,17 +46,7 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinuedHandler = () => {
-        this.setState({
-            isLoading: true
-        });
-
-        let queryStr = this.setQueryParams(this.state.ingredients);
-        queryStr += `&totalPrice=${this.props.totalPrice}`;
-        const query = {
-            pathname: ROUTES.CHECKOUT.LINK,
-            search: `?${queryStr}`
-        }
-        this.props.history.push(query);
+        this.props.history.push(ROUTES.CHECKOUT.LINK);
     };
 
     purchaseCanceldHandler = () => {
@@ -81,16 +71,6 @@ class BurgerBuilder extends Component {
         }
 
         return disabledInfo;
-    }
-
-    setQueryParams = (obj) => {
-        const queryParams = [];
-        for (const item in obj) {
-            queryParams.push(
-                `${encodeURIComponent(item)}=${encodeURIComponent(obj[item])}`
-            )
-        }
-        return queryParams.join('&');
     }
 
     /**
