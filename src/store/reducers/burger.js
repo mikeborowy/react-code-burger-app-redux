@@ -4,35 +4,33 @@ import { burgerAPI } from '../../services/api/index';
 
 //Types
 export const actionTypes = {
-    ADD_INGREDIENT: 'ADD_INGREDIENT',
-    REMOVE_INGREDIENT: 'REMOVE_INGREDIENT',
-    GET_INGREDIENTS: 'GET_INGREDIENTS',
-    GET_INGREDIENTS_ERR: 'GET_INGREDIENTS_ERR',
-    SET_INGREDIENTS: 'SET_INGREDIENTS'
+    BURGER_ADD_INGREDIENT: 'BURGER_ADD_INGREDIENT',
+    BURGER_REMOVE_INGREDIENT: 'BURGER_REMOVE_INGREDIENT',
+    BURGER_SET_INGREDIENTS: 'BURGER_SET_INGREDIENTS',
+    BURGER_INGREDIENTS_ERR: 'BURGER_INGREDIENTS_ERR'
 }
-//Action creators
-export const onAddIngredient = (ingredientName) => ({ type: actionTypes.ADD_INGREDIENT, ingredientName });
-export const onRemoveIngredient = (ingredientName) => ({ type: actionTypes.REMOVE_INGREDIENT, ingredientName });
-export const onGetIngredient = (ingredients) => ({ type: actionTypes.GET_INGREDIENTS, ingredients });
-export const onGetIngredientError = () => ({ type: actionTypes.GET_INGREDIENTS_ERR });
-export const onSetIngredient = (ingredients) => ({ type: actionTypes.SET_INGREDIENTS, ingredients });
 
+//Action creators
+export const onAddIngredient = (ingredientName) => ({ type: actionTypes.BURGER_ADD_INGREDIENT, ingredientName });
+export const onRemoveIngredient = (ingredientName) => ({ type: actionTypes.BURGER_REMOVE_INGREDIENT, ingredientName });
+export const onSetIngredients = (ingredients) => ({ type: actionTypes.BURGER_SET_INGREDIENTS, ingredients });
+export const onIngredientsError = () => ({ type: actionTypes.BURGER_INGREDIENTS_ERR });
 
 //API Action creators
 export const onGetIngredientsAPI = (ingredients) => async (dispatch) => {
     const call = await burgerAPI.get(`https://react-burger-app-617db.firebaseio.com/ingredients.json`)
         .then(response => {
             const ingredients = response.data;
-            dispatch(onSetIngredient(ingredients));
+            dispatch(onSetIngredients(ingredients));
         })
         .catch( error => {
-            dispatch(onGetIngredientError());
+            dispatch(onIngredientsError());
         });
 
     return call;
 };
 
-export const onSetIngredients = (ingredients) => ({ type: actionTypes.SET_INGREDIENTS, ingredients });
+
 
 //Reducer Model
 const inistialState = {
@@ -44,7 +42,7 @@ const inistialState = {
 //Reducer
 export default (state = inistialState, action) => {
     switch ( action.type ) {
-        case actionTypes.ADD_INGREDIENT:
+        case actionTypes.BURGER_ADD_INGREDIENT:
             return {
                 ...state,
                 ingredients: {
@@ -53,7 +51,7 @@ export default (state = inistialState, action) => {
                 },
                 totalPrice: state.totalPrice + INGREDIENTS_PRICES[action.ingredientName.toUpperCase()]
             };
-        case actionTypes.REMOVE_INGREDIENT:
+        case actionTypes.BURGER_REMOVE_INGREDIENT:
             return {
                 ...state,
                 ingredients: {
@@ -63,7 +61,7 @@ export default (state = inistialState, action) => {
                 totalPrice: state.totalPrice - INGREDIENTS_PRICES[action.ingredientName.toUpperCase()]
             };
 
-        case actionTypes.SET_INGREDIENTS:
+        case actionTypes.BURGER_SET_INGREDIENTS:
             return {
                 ...state,
                 ingredients: {
@@ -74,7 +72,7 @@ export default (state = inistialState, action) => {
                 },
                 error: false
             }
-        case actionTypes.GET_INGREDIENTS_ERR:
+        case actionTypes.BURGER_INGREDIENTS_ERR:
             return {
                 ...state,
                 error: true

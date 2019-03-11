@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {
+  onOrderBurger,
+  onOrderBurgerAPI
+} from '../../../../store/reducers/order';
 import styles from './contactData.scss';
 // component/common
 import Button from '../../../common/buttons/button/Button';
 import Input from '../../../common/input/Input';
 import Spinner from '../../../common/spinner/Spinner';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 // constants
 import { BUTTONS } from '../../../../constants/buttons';
 import { ROUTES } from '../../../../constants/routes';
@@ -23,7 +29,6 @@ class ContactData extends Component {
     }
     orderHandler = (evt) => {
         evt.preventDefault();
-        this.setState({ isLoading: true });
 
         const formData = {};
         for (let formElementIdentifier in this.state.orderForm) {
@@ -35,19 +40,7 @@ class ContactData extends Component {
             orderData: formData
         }
 
-        burgerAPI
-            .post('/orders.json', order)
-            .then((response => {
-                this.setState({
-                    isLoading: false
-                })
-                this.props.history.push(ROUTES.BUILDER.LINK);
-            }))
-            .catch((error) => {
-                this.setState({
-                    isLoading: false
-                })
-            });
+        this.props.onOrderBurgerAPI(order);
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
@@ -122,6 +115,8 @@ class ContactData extends Component {
     }
 }
 
+const ContactDataWithError = withErrorHandler(ContactData, burgerAPI);
+
 const mapStateToProps = (state) => {
     return {
         ingredients: state.order.ingredients,
@@ -129,4 +124,13 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    onOrderBurger,
+    onOrderBurgerAPI
+}, dispatch);
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ContactDataWithError);

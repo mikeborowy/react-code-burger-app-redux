@@ -8,15 +8,15 @@ const propTypes = {
     ingredients: PropTypes.object.isRequired
 }
 
-const BurgerView = (props) => {
+const Burger = (props) => {
 
     let renderIngredients = Object.keys(props.ingredients)
         .map(ingredient => (
             [...Array( props.ingredients[ingredient] )]
                 .map((_, idx) => (
-                        <Ingredient 
-                            key={ingredient + '_' + idx} 
-                            type={ingredient} 
+                        <Ingredient
+                            key={ingredient + '_' + idx}
+                            type={ingredient}
                         />
                     )
                 )
@@ -34,6 +34,6 @@ const BurgerView = (props) => {
     );
 };
 
-BurgerView.propTypes = propTypes;
+Burger.propTypes = propTypes;
 
-export default BurgerView;
+export default Burger;
