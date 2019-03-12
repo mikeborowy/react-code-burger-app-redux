@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
-  onOrderBurger,
+  onOrderBurgerDone,
   onOrderBurgerAPI
 } from '../../../../store/reducers/order';
 import styles from './contactData.scss';
@@ -121,11 +121,12 @@ const mapStateToProps = (state) => {
     return {
         ingredients: state.order.ingredients,
         totalPrice: state.order.totalPrice,
+        isLoading: state.order.isLoading
     }
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    onOrderBurger,
+    onOrderBurgerDone,
     onOrderBurgerAPI
 }, dispatch);
 

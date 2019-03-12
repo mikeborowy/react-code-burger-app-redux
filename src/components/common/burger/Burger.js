@@ -21,7 +21,7 @@ const Burger = (props) => {
                     )
                 )
         ))
-        .reduce((acc, item) => acc.concat(item), []);
+        .reduce((acc, item) => [...acc, item], []);
 
     if (renderIngredients.length === 0) renderIngredients = <p>Please add ingredients</p>;
 

@@ -18,19 +18,18 @@ export const onIngredientsError = () => ({ type: actionTypes.BURGER_INGREDIENTS_
 
 //API Action creators
 export const onGetIngredientsAPI = (ingredients) => async (dispatch) => {
-    const call = await burgerAPI.get(`https://react-burger-app-617db.firebaseio.com/ingredients.json`)
-        .then(response => {
-            const ingredients = response.data;
-            dispatch(onSetIngredients(ingredients));
-        })
-        .catch( error => {
-            dispatch(onIngredientsError());
-        });
+    const response = await burgerAPI.get(`https://react-burger-app-617db.firebaseio.com/ingredients.json`);
+    dispatch(onSetIngredients(response.data));
 
-    return call;
+        // .then(response => {
+        //     const ingredients = response.data;
+        // dispatch(onSetIngredients(response.data));
+        // })
+        // .catch( error => {
+        //     dispatch(onIngredientsError());
+        // });
+    // return call;
 };
-
-
 
 //Reducer Model
 const inistialState = {
