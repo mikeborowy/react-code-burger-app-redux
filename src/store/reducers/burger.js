@@ -20,15 +20,6 @@ export const onIngredientsError = () => ({ type: actionTypes.BURGER_INGREDIENTS_
 export const onGetIngredientsAPI = (ingredients) => async (dispatch) => {
     const response = await burgerAPI.get(`https://react-burger-app-617db.firebaseio.com/ingredients.json`);
     dispatch(onSetIngredients(response.data));
-
-        // .then(response => {
-        //     const ingredients = response.data;
-        // dispatch(onSetIngredients(response.data));
-        // })
-        // .catch( error => {
-        //     dispatch(onIngredientsError());
-        // });
-    // return call;
 };
 
 //Reducer Model
@@ -69,6 +60,7 @@ export default (state = inistialState, action) => {
                     cheese: action.ingredients.cheese,
                     meat: action.ingredients.meat,
                 },
+                totalPrice: 0,
                 error: false
             }
         case actionTypes.BURGER_INGREDIENTS_ERR:

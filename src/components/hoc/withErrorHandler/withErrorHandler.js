@@ -10,6 +10,9 @@ export default (WrappedComponent, axios) => {
             error: null
         }
 
+        reqInterceptors = null;
+        resInterceptors = null;
+
         componentDidMount() {
             this.reqInterceptors = axios.interceptors.request.use(req => {
                 this.setState({ error: null });

@@ -7,16 +7,11 @@ import { ROUTES } from '../../../constants/routes';
 function Navigation () {
     return (
         <ul className={classes.navigation}>
-            <NavigationItem
-                link={ROUTES.BUILDER.LINK}
-                active
-            >
-            {ROUTES.BUILDER.NAME}
+            <NavigationItem link={ROUTES.BUILDER.LINK} exact>
+                {ROUTES.BUILDER.NAME}
             </NavigationItem>
-            <NavigationItem
-                link={ROUTES.ORDERS.LINK}
-            >
-            {ROUTES.ORDERS.NAME}
+            <NavigationItem link={ROUTES.ORDERS.LINK}>
+                {ROUTES.ORDERS.NAME}
             </NavigationItem>
         </ul>
     )

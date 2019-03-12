@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { onOrderBurgerAPI } from '../../../../store/reducers/order';
+import { onOrderBurgerSetAPI } from '../../../../store/reducers/order';
 import styles from './contactData.scss';
 // component/common
 import Button from '../../../common/buttons/button/Button';
@@ -10,7 +10,6 @@ import Spinner from '../../../common/spinner/Spinner';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 // constants
 import { BUTTONS } from '../../../../constants/buttons';
-import { ROUTES } from '../../../../constants/routes';
 import { ORDER_FORM } from '../../../../constants/stateInit';
 // helpers
 import { checkValidity } from '../../../../helpers/index';
@@ -35,7 +34,7 @@ class ContactData extends Component {
             totalPrice: this.props.totalPrice,
             orderData: formData
         }
-        this.props.onOrderBurgerAPI(order);
+        this.props.onOrderBurgerSetAPI(order);
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
@@ -121,7 +120,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    onOrderBurgerAPI
+    onOrderBurgerSetAPI
 }, dispatch);
 
 
