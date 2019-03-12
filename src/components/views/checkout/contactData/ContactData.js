@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  onOrderBurgerDone,
-  onOrderBurgerAPI
-} from '../../../../store/reducers/order';
+import { onOrderBurgerAPI } from '../../../../store/reducers/order';
 import styles from './contactData.scss';
 // component/common
 import Button from '../../../common/buttons/button/Button';
@@ -25,7 +22,6 @@ class ContactData extends Component {
     state = {
         orderForm: ORDER_FORM,
         formIsValid: false,
-        isLoading: false
     }
     orderHandler = (evt) => {
         evt.preventDefault();
@@ -39,7 +35,6 @@ class ContactData extends Component {
             totalPrice: this.props.totalPrice,
             orderData: formData
         }
-
         this.props.onOrderBurgerAPI(order);
     }
 
@@ -88,7 +83,7 @@ class ContactData extends Component {
             return <Input {...inputProps}/>
         });
 
-        if(this.state.isLoading) {
+        if(this.props.isLoading) {
             return <Spinner />
         }
 
@@ -119,14 +114,13 @@ const ContactDataWithError = withErrorHandler(ContactData, burgerAPI);
 
 const mapStateToProps = (state) => {
     return {
-        ingredients: state.order.ingredients,
-        totalPrice: state.order.totalPrice,
+        ingredients: state.burger.ingredients,
+        totalPrice: state.burger.totalPrice,
         isLoading: state.order.isLoading
     }
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    onOrderBurgerDone,
     onOrderBurgerAPI
 }, dispatch);
 

@@ -4,30 +4,31 @@ import { burgerAPI } from '../../services/api/index';
 //Types
 export const actionTypes = {
     ORDER_PURCHASE_INIT: 'ORDER_PURCHASE_INIT',
+    ORDER_PURCHASE_INIT_API: 'ORDER_PURCHASE_INIT_API',
     ORDER_PURCHASE_SUCCESS: 'ORDER_PURCHASE_SUCCESS',
     ORDER_PURCHASE_ERR: 'ORDER_PURCHASE_ERR'
 }
 
 //Action creators
-export const onOrderBurgerInit = (order) => ({ type: actionTypes.ORDER_PURCHASE });
+export const onOrderBurgerInit = (order) => ({ type: actionTypes.ORDER_PURCHASE_INIT });
+export const onOrderBurgerError = (error) => ({ type: actionTypes.ORDER_PURCHASE_ERR, error });
 
-export const onOrderBurgerDone = (orderId, order) => ({
+//API Action creators
+export const onOrderBurgerInitAPI = (order) => ({ type: actionTypes.ORDER_PURCHASE_INIT_API });
+export const onOrderBurgerDoneAPI = (orderId, order) => ({
     type: actionTypes.ORDER_PURCHASE_SUCCESS,
     orderId,
     order
 });
-
-export const onOrderBurgerError = (error) => ({ type: actionTypes.ORDER_PURCHASE_ERR, error });
-
 export const onOrderBurgerAPI = (order) => async (dispatch) => {
-    dispatch(onOrderBurgerInit);
+    dispatch(onOrderBurgerInitAPI());
     const response = burgerAPI.post('/orders.json', order);
     const orderId = response.data;
-    dispatch(onOrderBurgerDone(orderId, order));
+    dispatch(onOrderBurgerDoneAPI(orderId, order));
 
 //         .then((response => {
 //             const orderId = response.data;
-//             dispatch(onOrderBurgerDone(orderId, order));
+//             dispatch(onOrderBurgerDoneAPI(orderId, order));
 //         }))
 //         .catch((error) => {
 //             dispatch(onOrderBurgerError(error));
@@ -39,16 +40,24 @@ export const onOrderBurgerAPI = (order) => async (dispatch) => {
 //Reducer Model
 const inistialState = {
     orders: [],
-    loading: false
+    isLoading: false,
+    isPurchased: false
 };
 
 //Reducer
 export default (state = inistialState, action) => {
     switch (action.type) {
+
         case actionTypes.ORDER_PURCHASE_INIT:
             return {
                 ...state,
-                loading: true
+                isPurchased: false
+            }
+
+        case actionTypes.ORDER_PURCHASE_INIT_API:
+            return {
+                ...state,
+                isLoading: true
             }
 
         case actionTypes.ORDER_PURCHASE_SUCCESS:
@@ -59,14 +68,15 @@ export default (state = inistialState, action) => {
 
            return {
                ...state,
-               loading: false,
+               isLoading: false,
+               isPurchased: true,
                orders: [...state.orders, newOrder]
            }
 
         case actionTypes.ORDER_PURCHASE_ERR:
             return {
                 ...state,
-                loading: false
+                isLoading: false
             }
 
         default:

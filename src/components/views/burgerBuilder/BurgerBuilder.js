@@ -7,6 +7,9 @@ import {
     onRemoveIngredient,
     onGetIngredientsAPI
 } from '../../../store/reducers/burger';
+import {
+    onOrderBurgerInit
+} from '../../../store/reducers/order';
 // HOC
 import Aux from '../../hoc/aux/Aux';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -42,6 +45,7 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinuedHandler = () => {
+        this.props.onOrderBurgerInit();
         this.props.history.push(ROUTES.CHECKOUT.LINK);
     };
 
@@ -150,7 +154,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     onAddIngredient,
     onRemoveIngredient,
-    onGetIngredientsAPI
+    onGetIngredientsAPI,
+    onOrderBurgerInit
 }, dispatch);
 
 const BurgerBuilderWithError = withErrorHandler(BurgerBuilder, burgerAPI);
