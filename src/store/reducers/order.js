@@ -39,15 +39,19 @@ export const onOrderBurgerSetAPI = (order) => async (dispatch) => {
 
 export const onOrdersGetAPI = () => async (dispatch) => {
     dispatch(onOrdersLoading());
-    const response = await burgerAPI.get('/orders.json');
-    const orders = [];
-    for (let key in response.data) {
-        orders.push({
-            ...response.data[key],
-            id: key
-        });
+    try {
+        const response = await burgerAPI.get('/orders.json');
+        const orders = [];
+        for (let key in response.data) {
+            orders.push({
+                ...response.data[key],
+                id: key
+            });
+        }
+        dispatch(onOrdersSet(orders));
+    } catch (error) {
+        alert(error);
     }
-    dispatch(onOrdersSet(orders));
 };
 
 //Reducer Model

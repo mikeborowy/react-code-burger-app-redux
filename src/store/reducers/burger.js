@@ -17,9 +17,13 @@ export const onSetIngredients = (ingredients) => ({ type: actionTypes.BURGER_SET
 export const onIngredientsError = () => ({ type: actionTypes.BURGER_INGREDIENTS_ERR });
 
 //API Action creators
-export const onGetIngredientsAPI = (ingredients) => async (dispatch) => {
-    const response = await burgerAPI.get(`https://react-burger-app-617db.firebaseio.com/ingredients.json`);
-    dispatch(onSetIngredients(response.data));
+export const onGetIngredientsAPI = () => async (dispatch) => {
+    try {
+        const response = await burgerAPI.get(`https://react-burger-app-617db.firebaseio.com/ingredients.json`);
+        dispatch(onSetIngredients(response.data));
+    } catch (error) {
+        alert(error);
+    }
 };
 
 //Reducer Model
@@ -49,8 +53,7 @@ export default (state = inistialState, action) => {
                     [action.ingredientName]: state.ingredients[action.ingredientName] - 1
                 },
                 totalPrice: state.totalPrice - INGREDIENTS_PRICES[action.ingredientName.toUpperCase()]
-            };
-
+            }
         case actionTypes.BURGER_SET_INGREDIENTS:
             return {
                 ...state,
