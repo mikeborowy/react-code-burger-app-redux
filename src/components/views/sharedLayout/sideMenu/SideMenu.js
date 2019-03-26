@@ -1,10 +1,10 @@
 import React from 'react';
 
 import classes from './sideMenu.scss';
-import Logo from '../../common/logo/Logo';
-import Navigation from '../../common/navigation/Navigation';
-import Overlay from '../../common/overlay/Overlay';
-import Aux from '../../hoc/aux/Aux';
+import Logo from '../../../common/logo/Logo';
+import Navigation from '../../../common/navigation/Navigation';
+import Overlay from '../../../common/overlay/Overlay';
+import Aux from '../../../hoc/aux/Aux';
 
 const SideMenu = ( props ) => {
     let attachedClasses = [classes.sideMenu, classes.close];
@@ -13,9 +13,9 @@ const SideMenu = ( props ) => {
     }
     return (
         <Aux>
-            <Overlay 
-                isOpen={props.open} 
-                onClose={props.onClose} 
+            <Overlay
+                isOpen={props.open}
+                onClose={props.onClose}
             />
             <div className={attachedClasses.join(' ')}>
                 <div className={classes.logo}>

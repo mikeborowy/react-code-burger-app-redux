@@ -17,7 +17,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../common/spinner/Spinner';
 import Burger from '../../common/burger/Burger';
 import BuildControls from '../burgerBuilder/buildControls/BuildControls';
-import Modal from '../../sharedLayout/modal/Modal';
+import Modal from '../../views/sharedLayout/modal/Modal';
 import OrderModal from './orderModal/OrderModal';
 // CONST/ENUMS
 

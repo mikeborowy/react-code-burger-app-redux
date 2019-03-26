@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Modal from '../../sharedLayout/modal/Modal';
+import Modal from '../../views/sharedLayout/modal/Modal';
 import Aux from '../aux/Aux';
 import { getDisplayName } from '../../../helpers';
 

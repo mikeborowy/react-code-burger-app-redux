@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './toolbar.scss';
-import Logo from '../../common/logo/Logo';
-import Navigation from '../../common/navigation/Navigation';
-import MenuButton from '../../common/buttons/menuButton/MenuButton';
+import Logo from '../../../common/logo/Logo';
+import Navigation from '../../../common/navigation/Navigation';
+import MenuButton from '../../../common/buttons/menuButton/MenuButton';
 
 const Toolbar = (props) => {
     return (

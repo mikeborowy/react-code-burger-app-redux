@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { getDisplayName } from '../../../helpers/index';
 
-const withAsync = (importedComponent) => {
+const withAsync = (importedComponent) => (name) => {
     class WithAsync extends Component {
         state = {
             component: null
         }
-
-        name = "fsadfsadf"
 
         componentDidMount () {
             importedComponent()
@@ -18,12 +15,11 @@ const withAsync = (importedComponent) => {
 
         render () {
             const Component = this.state.component;
-
             return Component ? <Component {...this.props} /> : null;
         }
     }
 
-    WithAsync.displayName = `withAsync(${getDisplayName(importedComponent)})`;
+    WithAsync.displayName = `withAsync(${name})`;
 
     return WithAsync;
 }
