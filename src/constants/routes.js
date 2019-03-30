@@ -1,4 +1,8 @@
 export const ROUTES = {
+    AUTH: {
+        LINK: '/auth',
+        NAME: 'Auth'
+    },
     BUILDER: {
         LINK: '/',
         NAME: 'Burger Builder'

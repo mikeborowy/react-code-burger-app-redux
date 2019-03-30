@@ -14,7 +14,7 @@ import { ORDER_FORM } from '../../../../constants/stateInit';
 // helpers
 import { checkValidity } from '../../../../helpers/index';
 // services/api
-import { burgerAPI } from '../../../../services/api/index';
+import { burgerAPI } from '../../../../services/api/burger';
 
 class ContactData extends Component {
 
@@ -22,6 +22,7 @@ class ContactData extends Component {
         orderForm: ORDER_FORM,
         formIsValid: false,
     }
+
     orderHandler = (evt) => {
         evt.preventDefault();
 
@@ -34,7 +35,7 @@ class ContactData extends Component {
             totalPrice: this.props.totalPrice,
             orderData: formData
         }
-        this.props.onOrderBurgerSetAPI(order);
+        this.props.onOrderBurgerSetAPI(order, this.props.token);
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
@@ -109,13 +110,14 @@ class ContactData extends Component {
     }
 }
 
-const ContactDataWithError = withErrorHandler(ContactData, burgerAPI);
+const ContactDataWithError = withErrorHandler(ContactData, burgerAPI.burger);
 
 const mapStateToProps = (state) => {
     return {
         ingredients: state.burger.ingredients,
         totalPrice: state.burger.totalPrice,
-        isLoading: state.order.isLoading
+        isLoading: state.order.isLoading,
+        token: state.auth.token,
     }
 }
 

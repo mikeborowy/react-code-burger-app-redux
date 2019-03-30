@@ -13,6 +13,9 @@ function Navigation () {
             <NavigationItem link={ROUTES.ORDERS.LINK}>
                 {ROUTES.ORDERS.NAME}
             </NavigationItem>
+            <NavigationItem link={ROUTES.AUTH.LINK}>
+                {ROUTES.AUTH.NAME}
+            </NavigationItem>
         </ul>
     )
 };

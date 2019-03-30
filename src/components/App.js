@@ -7,10 +7,11 @@ import { ROUTES } from '../constants/routes';
 
 //Dynamic imports
 import {
-  SharedLayout,
+  Auth,
   BurgerBuilder,
   Checkout,
-  Orders
+  Orders,
+  SharedLayout
 } from './views/views';
 
 class App extends Component {
@@ -24,6 +25,10 @@ class App extends Component {
                   path={ROUTES.BUILDER.LINK}
                   component={BurgerBuilder}
                   exact
+                />
+                <Route
+                  path={ROUTES.AUTH.LINK}
+                  component={Auth}
                 />
                 <Route
                   path={ROUTES.CHECKOUT.LINK}

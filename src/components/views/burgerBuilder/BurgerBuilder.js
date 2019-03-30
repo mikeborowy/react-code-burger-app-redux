@@ -23,7 +23,7 @@ import OrderModal from './orderModal/OrderModal';
 
 import { ROUTES } from '../../../constants/routes';
 // API
-import { burgerAPI } from '../../../services/api/index';
+import { burgerAPI } from '../../../services/api/burger';
 
 class BurgerBuilder extends Component {
 
@@ -158,7 +158,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     onOrderBurgerInit
 }, dispatch);
 
-const BurgerBuilderWithError = withErrorHandler(BurgerBuilder, burgerAPI);
+const BurgerBuilderWithError = withErrorHandler(BurgerBuilder, burgerAPI.burger);
 
 export default connect(
     mapStateToProps,

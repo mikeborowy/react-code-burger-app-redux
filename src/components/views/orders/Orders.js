@@ -10,7 +10,7 @@ import {
 class Orders extends Component {
 
     componentDidMount() {
-        this.props.onOrdersGetAPI();
+        this.props.onOrdersGetAPI(this.props.token);
     }
 
     renderOrders = () => {
@@ -39,7 +39,8 @@ class Orders extends Component {
 const mapStateToProps = state => {
     return {
         isLoading: state.order.isLoading,
-        orders: state.order.orders
+        orders: state.order.orders,
+        token: state.auth.token
     }
 }
 

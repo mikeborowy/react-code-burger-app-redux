@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './input.scss';
+import { INPUTS } from '../../../constants/inputs';
 
 const Input = ( props ) => {
     let inputElement = null;
@@ -10,21 +11,21 @@ const Input = ( props ) => {
     }
 
     switch ( props.elementType ) {
-        case ( 'input' ):
+        case ( INPUTS.INPUT ):
             inputElement = <input
                 className={inputClasses.join(' ')}
                 {...props.elementConfig}
                 value={props.value}
                 onChange={props.onChange} />;
             break;
-        case ( 'textarea' ):
+        case ( INPUTS.TEXTAREA ):
             inputElement = <textarea
                 className={inputClasses.join(' ')}
                 {...props.elementConfig}
                 value={props.value}
                 onChange={props.onChange} />;
             break;
-        case ( 'select' ):
+        case ( INPUTS.SELECT ):
             inputElement = (
                 <select
                     className={inputClasses.join(' ')}

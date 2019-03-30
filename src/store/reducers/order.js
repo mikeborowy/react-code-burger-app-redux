@@ -1,5 +1,5 @@
 // API
-import { burgerAPI } from '../../services/api/index';
+import { burgerAPI } from '../../services/api/burger';
 
 //Types
 export const actionTypes = {
@@ -30,17 +30,21 @@ export const onOrdersSet = (orders) => ({ type: actionTypes.ORDERS_SET, orders }
 
 
 //API Action creators
-export const onOrderBurgerSetAPI = (order) => async (dispatch) => {
+export const onOrderBurgerSetAPI = (order, token) => async (dispatch) => {
     dispatch(onOrderBurgerLoading());
-    const response = burgerAPI.post('/orders.json', order);
-    const orderId = response.data;
-    dispatch(onOrderBurgerSet(orderId, order));
+    try {
+        const response = await burgerAPI.setOrder(order, token);
+        const orderId = response.data;
+        dispatch(onOrderBurgerSet(orderId, order));
+   } catch (error) {
+        dispatch(onOrdersError(error));
+   }
 }
 
-export const onOrdersGetAPI = () => async (dispatch) => {
+export const onOrdersGetAPI = (token) => async (dispatch) => {
     dispatch(onOrdersLoading());
     try {
-        const response = await burgerAPI.get('/orders.json');
+        const response = await burgerAPI.getOrders(token);
         const orders = [];
         for (let key in response.data) {
             orders.push({
@@ -50,12 +54,13 @@ export const onOrdersGetAPI = () => async (dispatch) => {
         }
         dispatch(onOrdersSet(orders));
     } catch (error) {
-        alert(error);
+        dispatch(onOrdersError(error));
     }
 };
 
 //Reducer Model
 const inistialState = {
+    token: null,
     orders: [],
     isLoading: false,
     isPurchased: false

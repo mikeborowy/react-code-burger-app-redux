@@ -6,6 +6,7 @@ const load = (name) => withAsync(
 )(name);
 
 export const SharedLayout = load('SharedLayout');
+export const Auth = load('Auth');
 export const BurgerBuilder = load('BurgerBuilder');
 export const Checkout = load('Checkout');
 export const Orders = load('Orders');

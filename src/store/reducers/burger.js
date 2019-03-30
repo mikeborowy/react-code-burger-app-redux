@@ -1,6 +1,6 @@
 import { INGREDIENTS_PRICES } from '../../constants/ingredients';
 // API
-import { burgerAPI } from '../../services/api/index';
+import { burgerAPI } from '../../services/api/burger';
 
 //Types
 export const actionTypes = {
@@ -19,10 +19,10 @@ export const onIngredientsError = () => ({ type: actionTypes.BURGER_INGREDIENTS_
 //API Action creators
 export const onGetIngredientsAPI = () => async (dispatch) => {
     try {
-        const response = await burgerAPI.get(`https://react-burger-app-617db.firebaseio.com/ingredients.json`);
+        const response = await burgerAPI.getIngredients();
         dispatch(onSetIngredients(response.data));
     } catch (error) {
-        alert(error);
+        dispatch(onIngredientsError(error));
     }
 };
 
