@@ -24,39 +24,67 @@ class App extends Component {
     this.props.onAuthCheckState();
   }
 
+  renderRoutes = () => {
+    if(this.props.isAuth) {
+      return (
+        <Switch>
+          <Route
+            path={ROUTES.LOG_OUT.LINK}
+            component={Logout}
+          />
+          <Route
+            path={ROUTES.AUTH.LINK}
+            component={Auth}
+          />
+          <Route
+            path={ROUTES.BUILDER.LINK}
+            component={BurgerBuilder}
+            exact
+          />
+          <Route
+            path={ROUTES.CHECKOUT.LINK}
+            component={Checkout}
+          />
+          <Route
+            path={ROUTES.ORDERS.LINK}
+            component={Orders}
+          />
+          <Redirect to={ROUTES.BUILDER.LINK} />
+        </Switch>
+      )
+    }
+
+    return (
+      <Switch>
+        <Route
+          path={ROUTES.AUTH.LINK}
+          component={Auth}
+        />
+        <Route
+          path={ROUTES.BUILDER.LINK}
+          component={BurgerBuilder}
+          exact
+        />
+      </Switch>
+      )
+  }
+
   render() {
     return (
       <div className="App">
         <Router history={history}>
             <SharedLayout>
-              <Switch>
-                <Route
-                  path={ROUTES.AUTH.LINK}
-                  component={Auth}
-                />
-                <Route
-                  path={ROUTES.LOG_OUT.LINK}
-                  component={Logout}
-                />
-                <Route
-                  path={ROUTES.BUILDER.LINK}
-                  component={BurgerBuilder}
-                  exact
-                />
-                <Route
-                  path={ROUTES.CHECKOUT.LINK}
-                  component={Checkout}
-                />
-                <Route
-                  path={ROUTES.ORDERS.LINK}
-                  component={Orders}
-                />
-                <Redirect to={ROUTES.BUILDER.LINK} />
-              </Switch>
+              {this.renderRoutes()}
             </SharedLayout>
         </Router>
       </div>
     );
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.auth.token !== null
   }
 }
 
@@ -65,7 +93,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 }, dispatch)
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(App);
 

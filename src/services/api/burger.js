@@ -6,7 +6,9 @@ const burger = axios.create({
 
 const getIngredients = () => burger.get(`ingredients.json`);
 const setOrder = (order, token) => burger.post(`/orders.json?auth=${token}`, order);
-const getOrders = (token) => burger.get(`/orders.json?auth=${token}`);
+const getOrders = (userId, token) => {
+  return burger.get(`/orders.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`);
+}
 
 export const burgerAPI = {
   burger,

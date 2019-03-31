@@ -41,10 +41,10 @@ export const onOrderBurgerSetAPI = (order, token) => async (dispatch) => {
    }
 }
 
-export const onOrdersGetAPI = (token) => async (dispatch) => {
+export const onOrdersGetAPI = (userId, token) => async (dispatch) => {
     dispatch(onOrdersLoading());
     try {
-        const response = await burgerAPI.getOrders(token);
+        const response = await burgerAPI.getOrders(userId, token);
         const orders = [];
         for (let key in response.data) {
             orders.push({

@@ -58,7 +58,7 @@ export const onAuthStartAPI = (email, password, isSignup) => async (dispatch) =>
         const params ={
             token: response.data.idToken,
             expirationDate,
-            userId: response.data.localId
+            userId: response.data.email
         }
         setStorage(params);
         dispatch(onAuthSuccess(response.data));

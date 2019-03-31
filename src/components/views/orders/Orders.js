@@ -10,11 +10,10 @@ import {
 class Orders extends Component {
 
     componentDidMount() {
-        this.props.onOrdersGetAPI(this.props.token);
+        this.props.onOrdersGetAPI(this.props.userId, this.props.token);
     }
 
     renderOrders = () => {
-
         if(this.props.isLoading) {
             return <Spinner />
         }
@@ -40,7 +39,8 @@ const mapStateToProps = state => {
     return {
         isLoading: state.order.isLoading,
         orders: state.order.orders,
-        token: state.auth.token
+        token: state.auth.token || localStorage.getItem('token'),
+        userId: state.auth.userId || localStorage.getItem('userId')
     }
 }
 
