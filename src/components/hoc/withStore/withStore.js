@@ -15,7 +15,6 @@ const withStore = (WrappedComponent, initialState={}) => {
     }
 
     WithStore.displayName = `withStore(${getDisplayName(WrappedComponent)})`;
-
     return WithStore;
 }
 

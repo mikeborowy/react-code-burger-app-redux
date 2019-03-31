@@ -10,6 +10,7 @@ import {
 import {
     onOrderBurgerInit
 } from '../../../store/reducers/order';
+import { onSetAuthRedirectPath } from '../../../store/reducers/auth';
 // HOC
 import Aux from '../../hoc/aux/Aux';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -41,8 +42,12 @@ class BurgerBuilder extends Component {
      */
 
     purchasingHandler = () => {
+        if(!this.props.isAuth){
+            this.props.onSetAuthRedirectPath(ROUTES.CHECKOUT.LINK);
+            this.props.history.push(ROUTES.AUTH.LINK);
+        };
         this.setState({ isPurchasing: true })
-    };
+    }
 
     purchaseContinuedHandler = () => {
         this.props.onOrderBurgerInit();
@@ -148,14 +153,16 @@ const mapStateToProps = (state) => {
         ingredients: state.burger.ingredients,
         totalPrice: state.burger.totalPrice,
         error: state.burger.error,
+        isAuth: state.auth.token !== null
     }
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     onAddIngredient,
     onRemoveIngredient,
+    onOrderBurgerInit,
     onGetIngredientsAPI,
-    onOrderBurgerInit
+    onSetAuthRedirectPath
 }, dispatch);
 
 const BurgerBuilderWithError = withErrorHandler(BurgerBuilder, burgerAPI.burger);

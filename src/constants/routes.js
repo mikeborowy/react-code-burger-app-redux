@@ -3,6 +3,10 @@ export const ROUTES = {
         LINK: '/auth',
         NAME: 'Auth'
     },
+    LOG_OUT: {
+        LINK: '/logout',
+        NAME: 'Logout'
+    },
     BUILDER: {
         LINK: '/',
         NAME: 'Burger Builder'

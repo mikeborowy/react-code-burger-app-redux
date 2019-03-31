@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Aux from '../../hoc/aux/Aux';
 import styles from './sharedLayout.scss';
 import Toolbar from './toolbar/Toolbar';
@@ -12,6 +13,7 @@ const propTypes = {
 const defaultProps = {
     children: {}
 };
+
 class SharedLayout extends Component {
 
     state = {
@@ -29,7 +31,8 @@ class SharedLayout extends Component {
     render(){
         return (
             <Aux>
-                <Toolbar onSideMenuToggle={this.sideMenuToggleHandler}/>
+                <Toolbar onSideMenuToggle={this.sideMenuToggleHandler}
+                />
                 <SideMenu
                     open={this.state.showSideMenu}
                     onClose={this.sideMenuCloseHandler}

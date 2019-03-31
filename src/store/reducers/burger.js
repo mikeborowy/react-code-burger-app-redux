@@ -28,6 +28,7 @@ export const onGetIngredientsAPI = () => async (dispatch) => {
 
 //Reducer Model
 const inistialState = {
+    isBuilding: false,
     ingredients: {},
     totalPrice: 0,
     error: false
@@ -39,6 +40,7 @@ export default (state = inistialState, action) => {
         case actionTypes.BURGER_ADD_INGREDIENT:
             return {
                 ...state,
+                isBuilding: true,
                 ingredients: {
                     ...state.ingredients,
                     [action.ingredientName]: state.ingredients[action.ingredientName] + 1
@@ -57,6 +59,7 @@ export default (state = inistialState, action) => {
         case actionTypes.BURGER_SET_INGREDIENTS:
             return {
                 ...state,
+                isBuilding: false,
                 ingredients: {
                     salad: action.ingredients.salad,
                     bacon: action.ingredients.bacon,

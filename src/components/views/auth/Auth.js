@@ -7,6 +7,7 @@ import {
     onAuthStart,
     onAuthSuccess,
     onAuthFail,
+    onSetAuthRedirectPath
 } from '../../../store/reducers/auth';
 import Input from '../../common/input/Input';
 import Button from '../../common/buttons/button/Button';
@@ -48,13 +49,12 @@ class Auth extends Component {
                 valid: false,
                 touched: false
             }
-        },
-        isSignup: false
+        }
     }
 
     componentDidMount() {
-        if (!this.props.buildingBurger && this.props.authRedirectPath !== '/') {
-            // this.props.onSetAuthRedirectPath();
+        if (!this.props.isBuilding && this.props.authRedirectPath !== '/') {
+            this.props.onSetAuthRedirectPath('/');
         }
     }
 
@@ -73,7 +73,7 @@ class Auth extends Component {
 
     submitHandler = ( event ) => {
         event.preventDefault();
-        this.props.onAuthStartAPI( this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup );
+        this.props.onAuthStartAPI( this.state.controls.email.value, this.state.controls.password.value, this.props.isAuth );
     }
 
     switchAuthModeHandler = () => {
@@ -116,7 +116,7 @@ class Auth extends Component {
         }
 
         let authRedirect = null;
-        if (this.props.isAuthenticated) {
+        if (this.props.isAuth) {
             authRedirect = <Redirect to={this.props.authRedirectPath}/>
         }
 
@@ -130,7 +130,7 @@ class Auth extends Component {
                 </form>
                 <Button
                     onClick={this.switchAuthModeHandler}
-                    btnType={BUTTONS.DANGER}>SWITCH TO {this.state.isSignup ? AUTH_STATUS.SIGNIN : AUTH_STATUS.SIGNUP}</Button>
+                    btnType={BUTTONS.DANGER}>SWITCH TO {this.props.isAuth ? AUTH_STATUS.SIGNIN : AUTH_STATUS.SIGNUP}</Button>
             </div>
         );
     }
@@ -140,22 +140,18 @@ const mapStateToProps = state => {
     return {
         isLoading: state.auth.isLoading,
         error: state.auth.error,
-        // isAuthenticated: state.auth.token !== null,
-        // buildingBurger: state.burgerBuilder.building,
-        // authRedirectPath: state.auth.authRedirectPath
+        isAuth: state.auth.token !== null,
+        isBuilding: state.burger.isBuilding,
+        authRedirectPath: state.auth.authRedirectPath
     };
 };
-
-// return {
-//     onAuth: ( email, password, isSignup ) => dispatch( actions.auth( email, password, isSignup ) ),
-//     onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
-// };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     onAuthStartAPI,
     onAuthStart,
     onAuthSuccess,
     onAuthFail,
+    onSetAuthRedirectPath
 }, dispatch);
 
 export default connect( mapStateToProps, mapDispatchToProps )( Auth );

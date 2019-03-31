@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
 import {Router, Route, Switch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { onAuthCheckState } from '../store/reducers/auth';
 import { history } from '../helpers/index';
 //hoc
-import withStore from './hoc/withStore/withStore';
+
 import { ROUTES } from '../constants/routes';
 
 //Dynamic imports
 import {
-  Auth,
   BurgerBuilder,
   Checkout,
   Orders,
-  SharedLayout
+  SharedLayout,
+  Auth,
+  Logout
 } from './views/views';
 
 class App extends Component {
+
+  componentDidMount(){
+    this.props.onAuthCheckState();
+  }
+
   render() {
     return (
       <div className="App">
@@ -22,13 +31,17 @@ class App extends Component {
             <SharedLayout>
               <Switch>
                 <Route
+                  path={ROUTES.AUTH.LINK}
+                  component={Auth}
+                />
+                <Route
+                  path={ROUTES.LOG_OUT.LINK}
+                  component={Logout}
+                />
+                <Route
                   path={ROUTES.BUILDER.LINK}
                   component={BurgerBuilder}
                   exact
-                />
-                <Route
-                  path={ROUTES.AUTH.LINK}
-                  component={Auth}
                 />
                 <Route
                   path={ROUTES.CHECKOUT.LINK}
@@ -47,4 +60,13 @@ class App extends Component {
   }
 }
 
-export default withStore(App);
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  onAuthCheckState
+}, dispatch)
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(App);
+
+// export default withStore(AppWithConnect);
