@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import withAsync from '../hoc/withAsync/withAsync';
+import * as _ from 'lodash';
+import { withAsync } from '../hoc/withAsync/withAsync';
 
 const load = (name) => withAsync(
     () => import(`../../components/views/${_.camelCase(name)}/${name}`)

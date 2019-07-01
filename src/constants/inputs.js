@@ -1,5 +1,5 @@
 export const INPUTS = {
-    INPUT: 'input',
-    TEXTAREA: 'textarea',
-    SELECT: 'seelct'
-}
+  INPUT: 'input',
+  TEXTAREA: 'textarea',
+  SELECT: 'seelct',
+};

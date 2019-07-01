@@ -1,4 +1,4 @@
 export const AUTH_STATUS = {
-    SIGNIN: 'SIGNIN',
-    SIGNUP: 'SIGNUP',
-}
+  SIGNIN: 'SIGNIN',
+  SIGNUP: 'SIGNUP',
+};

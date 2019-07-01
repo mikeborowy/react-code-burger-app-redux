@@ -5,20 +5,24 @@ import { bindActionCreators } from 'redux';
 import { onLogout } from '../../../store/reducers/auth';
 
 class Logout extends Component {
-    componentDidMount () {
-        this.props.onLogout();
-    }
+  componentDidMount() {
+    this.props.onLogout();
+  }
 
-    render () {
-        return <Redirect to="/"/>;
-    }
+  render() {
+    return <Redirect to="/" />;
+  }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-    onLogout
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      onLogout,
+    },
+    dispatch,
+  );
 
 export default connect(
-    null,
-    mapDispatchToProps
+  null,
+  mapDispatchToProps,
 )(Logout);

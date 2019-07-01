@@ -13,11 +13,7 @@ import { bindActionCreators } from 'redux';
  * If there are more than 1 imported methods
  * use next line separation
 */
-import {
-    onAddIngredient,
-    onGetIngredientsAPI,
-    onRemoveIngredient,
-} from '../../../store/reducers/burger';
+import { onAddIngredient, onGetIngredientsAPI, onRemoveIngredient, } from '../../../store/reducers/burger';
 import { onOrderBurgerInit } from '../../../store/reducers/order';
 import { onSetAuthRedirectPath } from '../../../store/reducers/auth';
 //Redux <- BAD: we don't make comments or empty lines to group
@@ -66,8 +62,7 @@ class BurgerBuilderComponent extends Component {
         ingredients: {},
         isAuth: false,
         isError: false,
-        totalPrice: 0,
-        onAddIngredient: () => { },
+        totalPrice: 0, onAddIngredient: () => { },
         onGetIngredientsAPI: () => { },
         onOrderBurgerInit: () => { },
         onSetAuthRedirectPath: () => { },

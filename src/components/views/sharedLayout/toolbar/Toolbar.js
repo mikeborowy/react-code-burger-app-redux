@@ -4,18 +4,20 @@ import Logo from '../../../common/logo/Logo';
 import Navigation from '../../../common/navigation/Navigation';
 import MenuButton from '../../../common/buttons/menuButton/MenuButton';
 
-const Toolbar = (props) => {
-    return (
-        <header className={styles.toolbar}>
-            <MenuButton onToggle={props.onSideMenuToggle} />
-            <div className={styles.logo}>
-                <Logo />
-            </div>
-            <nav className={styles.desktopOnly}>
-                <Navigation />
-            </nav>
-        </header>
-    );
-};
+export const Toolbar = props => {
+  const { onSideMenuToggle } = props;
 
-export default Toolbar;
+  const { toolbar, logo, desktopOnly } = styles;
+
+  return (
+    <header className={toolbar}>
+      <MenuButton onToggle={onSideMenuToggle} />
+      <div className={logo}>
+        <Logo />
+      </div>
+      <nav className={desktopOnly}>
+        <Navigation />
+      </nav>
+    </header>
+  );
+};

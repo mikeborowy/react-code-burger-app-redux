@@ -3,7 +3,7 @@ import Modal from '../../views/sharedLayout/modal/Modal';
 import Aux from '../aux/Aux';
 import { getDisplayName } from '../../../helpers';
 
-export default (WrappedComponent, axios) => {
+export const withErrorHandler = (WrappedComponent, axios) => {
     class WithErrorHandler extends Component {
 
         state = {
@@ -49,7 +49,7 @@ export default (WrappedComponent, axios) => {
                     >
                         {this.state.error ? this.state.error.message : null}
                     </Modal>
-                    <WrappedComponent {...this.props}/>
+                    <WrappedComponent {...this.props} />
                 </Aux>
             )
         };

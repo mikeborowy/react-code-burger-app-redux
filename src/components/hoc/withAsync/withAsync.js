@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const withAsync = (importedComponent) => (name) => {
+export const withAsync = (importedComponent) => (name) => {
     class WithAsync extends Component {
         state = {
             component: null
@@ -27,5 +27,3 @@ const withAsync = (importedComponent) => (name) => {
 
     return WithAsync;
 }
-
-export default withAsync;

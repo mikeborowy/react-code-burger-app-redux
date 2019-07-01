@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { onAuthCheckState } from '../store/reducers/auth';
@@ -18,14 +18,14 @@ import {
   Logout
 } from './views/views';
 
-class App extends Component {
+class AppComponent extends Component {
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.onAuthCheckState();
   }
 
   renderRoutes = () => {
-    if(this.props.isAuth) {
+    if (this.props.isAuth) {
       return (
         <Switch>
           <Route
@@ -66,16 +66,16 @@ class App extends Component {
           exact
         />
       </Switch>
-      )
+    )
   }
 
   render() {
     return (
       <div className="App">
         <Router history={history}>
-            <SharedLayout>
-              {this.renderRoutes()}
-            </SharedLayout>
+          <SharedLayout>
+            {this.renderRoutes()}
+          </SharedLayout>
         </Router>
       </div>
     );
@@ -92,9 +92,9 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   onAuthCheckState
 }, dispatch)
 
-export default connect(
+export const App = connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(AppComponent);
 
 // export default withStore(AppWithConnect);

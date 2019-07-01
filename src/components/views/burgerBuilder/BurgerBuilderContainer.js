@@ -7,32 +7,34 @@ import { bindActionCreators } from 'redux';
 import {
   onAddIngredient,
   onRemoveIngredient,
-  onGetIngredientsAPI
+  onGetIngredientsAPI,
 } from '../../../store/reducers/burger';
-import {
-  onOrderBurgerInit
-} from '../../../store/reducers/order';
+import { onOrderBurgerInit } from '../../../store/reducers/order';
 import { onSetAuthRedirectPath } from '../../../store/reducers/auth';
 import { BurgerBuilder } from './BurgerBuilder';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     ingredients: state.burger.ingredients,
     totalPrice: state.burger.totalPrice,
     error: state.burger.error,
-    isAuth: state.auth.token !== null
-  }
-}
+    isAuth: state.auth.token !== null,
+  };
+};
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  onAddIngredient,
-  onRemoveIngredient,
-  onOrderBurgerInit,
-  onGetIngredientsAPI,
-  onSetAuthRedirectPath
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      onAddIngredient,
+      onRemoveIngredient,
+      onOrderBurgerInit,
+      onGetIngredientsAPI,
+      onSetAuthRedirectPath,
+    },
+    dispatch,
+  );
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(BurgerBuilder);
