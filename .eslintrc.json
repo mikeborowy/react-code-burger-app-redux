@@ -1,0 +1,94 @@
+{
+  "extends": [
+    "airbnb",
+    "plugin:prettier/recommended",
+    "prettier/react"
+  ],
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "jest": true,
+    "node": true
+  },
+  "rules": {
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "react/prop-types": "warn",
+    "jsx-a11y/href-no-hash": [
+      "off"
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      "off"
+    ],
+    "jsx-quotes": "warn",
+    "consistent-return": "off",
+    "import/prefer-default-export": "off",
+    "import/no-default-export": "error",
+    "eol-last": "off",
+    "no-console": "error",
+    "no-debugger": "error",
+    "no-var": "error",
+    "no-trailing-spaces": "warn",
+    "no-unused-vars": "warn",
+    "no-underscore-dangle": "warn",
+    "no-alert": "warn",
+    "no-lone-blocks": "warn",
+    "no-use-before-define": "warn",
+    "max-len": [
+      "warn",
+      {
+        "code": 100,
+        "tabWidth": 2,
+        "comments": 100,
+        "ignoreComments": false,
+        "ignoreTrailingComments": true,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ],
+    "prefer-destructuring": [
+      "error",
+      {
+        "VariableDeclarator": {
+          "array": true,
+          "object": true
+        },
+        "AssignmentExpression": {
+          "array": true,
+          "object": true
+        }
+      },
+      {
+        "enforceForRenamedProperties": false
+      }
+    ],
+    "react/display-name": [
+      "warn",
+      {
+        "ignoreTranspilerName": false
+      }
+    ],
+    "react/forbid-prop-types": [
+      "warn",
+      {
+        "forbid": [
+          "any"
+        ]
+      }
+    ],
+    "semi": [
+      1,
+      "always"
+    ]
+  }
+}
