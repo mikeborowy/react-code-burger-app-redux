@@ -1,10 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import CheckoutSummary from './checkoutSummary/CheckoutSummary';
 import ContactData from './contactData/ContactData';
-import { onOrderBurgerInit } from '../../../store/reducers/order';
 import { ROUTES } from '../../../constants/routes';
 
 class Checkout extends Component {
@@ -20,7 +18,7 @@ class Checkout extends Component {
     renderSummary() {
         if (this.props.ingredients) {
 
-            if(this.props.isPurchased) {
+            if (this.props.isPurchased) {
                 return <Redirect to={ROUTES.BUILDER.LINK} />
             }
 
@@ -30,7 +28,7 @@ class Checkout extends Component {
                         ingredients={this.props.ingredients}
                         onCheckoutContinue={this.checkoutContinueHandler}
                         onCheckoutCancel={this.checkoutCancelHandler}
-                        />
+                    />
                     <Route
                         path={this.props.match.path + ROUTES.CONTACT_DATA.LINK}
                         component={ContactData}

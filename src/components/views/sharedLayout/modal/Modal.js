@@ -9,7 +9,7 @@ const Modal = (props) => {
     style = {
         ...style,
         transform: props.isOpen ? 'translateY(0)' : 'translate(-100vh)',
-        opacity:  props.isOpen ? '1' : '0'
+        opacity: props.isOpen ? '1' : '0'
     };
 
     return (

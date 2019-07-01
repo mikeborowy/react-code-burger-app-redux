@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Aux from '../../hoc/aux/Aux';
 import styles from './sharedLayout.scss';
 import Toolbar from './toolbar/Toolbar';
@@ -28,7 +27,7 @@ class SharedLayout extends Component {
         this.setState(prevState => ({ showSideMenu: !prevState.showSideMenu }));
     }
 
-    render(){
+    render() {
         return (
             <Aux>
                 <Toolbar onSideMenuToggle={this.sideMenuToggleHandler}

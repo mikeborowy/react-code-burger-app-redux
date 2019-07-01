@@ -6,14 +6,18 @@ const withAsync = (importedComponent) => (name) => {
             component: null
         }
 
-        componentDidMount () {
+        componentDidMount() {
             importedComponent()
-                .then(cmp => {
-                    this.setState({component: cmp.default});
+                .then(module => {
+                    const component = module.hasOwnProperty('default')
+                        ? module.default
+                        : module[name];
+
+                    this.setState({ component });
                 });
         }
 
-        render () {
+        render() {
             const Component = this.state.component;
             return Component ? <Component {...this.props} /> : null;
         }

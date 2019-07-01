@@ -58,40 +58,40 @@ class Auth extends Component {
         }
     }
 
-    inputChangedHandler = ( evt, controlName ) => {
+    inputChangedHandler = (evt, controlName) => {
         const updatedControls = {
             ...this.state.controls,
             [controlName]: {
                 ...this.state.controls[controlName],
                 value: evt.target.value,
-                valid: checkValidity( evt.target.value, this.state.controls[controlName].validation ),
+                valid: checkValidity(evt.target.value, this.state.controls[controlName].validation),
                 touched: true
             }
         };
-        this.setState( { controls: updatedControls } );
+        this.setState({ controls: updatedControls });
     }
 
-    submitHandler = ( event ) => {
+    submitHandler = (event) => {
         event.preventDefault();
-        this.props.onAuthStartAPI( this.state.controls.email.value, this.state.controls.password.value, this.props.isAuth );
+        this.props.onAuthStartAPI(this.state.controls.email.value, this.state.controls.password.value, this.props.isAuth);
     }
 
     switchAuthModeHandler = () => {
         this.setState(prevState => {
-            return {isSignup: !prevState.isSignup};
+            return { isSignup: !prevState.isSignup };
         });
     }
 
-    render () {
+    render() {
         const formElementsArray = [];
-        for ( let key in this.state.controls ) {
-            formElementsArray.push( {
+        for (let key in this.state.controls) {
+            formElementsArray.push({
                 id: key,
                 config: this.state.controls[key]
-            } );
+            });
         }
 
-        let form = formElementsArray.map( formElement => (
+        let form = formElementsArray.map(formElement => (
             <Input
                 key={formElement.id}
                 elementType={formElement.config.elementType}
@@ -100,8 +100,8 @@ class Auth extends Component {
                 invalid={!formElement.config.valid}
                 shouldValidate={formElement.config.validation}
                 touched={formElement.config.touched}
-                onChange={( evt ) => this.inputChangedHandler( evt, formElement.id )} />
-        ) );
+                onChange={(evt) => this.inputChangedHandler(evt, formElement.id)} />
+        ));
 
         if (this.props.isLoading) {
             form = <Spinner />
@@ -117,7 +117,7 @@ class Auth extends Component {
 
         let authRedirect = null;
         if (this.props.isAuth) {
-            authRedirect = <Redirect to={this.props.authRedirectPath}/>
+            authRedirect = <Redirect to={this.props.authRedirectPath} />
         }
 
         return (
@@ -154,4 +154,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     onSetAuthRedirectPath
 }, dispatch);
 
-export default connect( mapStateToProps, mapDispatchToProps )( Auth );
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

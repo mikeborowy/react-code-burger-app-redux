@@ -1,75 +1,192 @@
+/** We import at first libraries, then
+ * components, imports should be sorted alphabetically
+ * PROPOSAL: automate it
+ */
 import React, { Component } from 'react';
-//Redux
+import PropTypes from 'prop-types';
+//Redux <- BAD: we don't make comments or empty lines to group
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+/**
+ * We use trialing comma
+ *
+ * If there are more than 1 imported methods
+ * use next line separation
+*/
 import {
     onAddIngredient,
+    onGetIngredientsAPI,
     onRemoveIngredient,
-    onGetIngredientsAPI
 } from '../../../store/reducers/burger';
-import {
-    onOrderBurgerInit
-} from '../../../store/reducers/order';
+import { onOrderBurgerInit } from '../../../store/reducers/order';
 import { onSetAuthRedirectPath } from '../../../store/reducers/auth';
-// HOC
+//Redux <- BAD: we don't make comments or empty lines to group
 import Aux from '../../hoc/aux/Aux';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-// COMPONENTS
+//Redux <- BAD: we don't make comments or empty lines to group
 import Spinner from '../../common/spinner/Spinner';
-import Burger from '../../common/burger/Burger';
+import { Burger } from '../../common/burger/Burger';
 import BuildControls from '../burgerBuilder/buildControls/BuildControls';
 import Modal from '../../views/sharedLayout/modal/Modal';
 import OrderModal from './orderModal/OrderModal';
-// CONST/ENUMS
-
+//Redux <- BAD: we don't make comments or empty lines to group
+// <- BAD: we don't make comments or empty lines to group
 import { ROUTES } from '../../../constants/routes';
-// API
+//Redux <- BAD: we don't make comments or empty lines to group
 import { burgerAPI } from '../../../services/api/burger';
+import { Ingredient } from '../../../propTypes/ingredient';
 
-class BurgerBuilder extends Component {
+class BurgerBuilderComponent extends Component {
 
-    state = {
-        isPurchasing: false,
-        isLoading: false
-    }
-
-    componentDidMount() {
-        this.props.onGetIngredientsAPI();
+    /**
+     * Every component needs to have propTypes
+     *
+     * We don't need to destructure object in
+     * here since we need valid array rather then object
+     *
+     * We create separate proptypes file in ./src/propTypes
+     * folder
+     * */
+    static propTypes = {
+        ingredients: PropTypes.object.isRequired,
+        isAuth: PropTypes.bool.isRequired,
+        isError: PropTypes.bool.isRequired,
+        totalPrice: PropTypes.number,
+        onAddIngredient: PropTypes.func.isRequired,
+        onGetIngredientsAPI: PropTypes.func.isRequired,
+        onOrderBurgerInit: PropTypes.func.isRequired,
+        onSetAuthRedirectPath: PropTypes.func.isRequired,
+        onRemoveIngredient: PropTypes.func.isRequired,
     }
 
     /**
-     * HANDLERS
+     * We use default props just for non-required props
+     */
+    static defaultProps = {
+        ingredients: {},
+        isAuth: false,
+        isError: false,
+        totalPrice: 0,
+        onAddIngredient: () => { },
+        onGetIngredientsAPI: () => { },
+        onOrderBurgerInit: () => { },
+        onSetAuthRedirectPath: () => { },
+        onRemoveIngredient: () => { },
+    } // <-- !!! EVERY COMPONENT SHOULD BE INDEPENDENT SO IT SHOULD HAS DEFAULT ALL PROPS
+
+    /**
+     * Always define default state;
+     *
+     * All state keys used in components
+     * need to be initializated in state declaration
+     *
+     * If there is constructor, move state declaration
+     * to it (unlike in this example)
+     */
+    state = {
+        isPurchasing: false,
+        isLoading: false,
+    }
+
+    constructor(props) {
+        super(props);
+        /**
+         * Put bindings at bottom of constructor
+         */
+        this.handleResize = this.handleResize.bind(this);
+    }
+
+    /**
+     * All lifecycle methods are right after state or constructor
+     */
+    componentDidMount() {
+        this.props.onGetIngredientsAPI();
+        window.addEventListener('resize', this.handleResizeArrow);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleResizeArrow);
+    }
+
+    /**
+     * We always wite arrow functions with curly braces except when
+     * arrow function is parameter like in higher order function .map
+     *
+     * Use meannigful variable naming
+     *
+     * Parameter always is placed between brackets
+     */
+    handleResizeArrow = (event) => {
+        /** Do something */
+    }
+
+    /**
+    * We use mostly arrow functions, however if you want to use function
+    * as callback, bind it in constructor
+    */
+    handleResize() {
+        /** Do something */
+    }
+
+    /** If line charactes are excedeed split it into next lines */
+    moreThanThreeParamsFunction = (
+        param1,
+        param2,
+        param3,
+        param4,
+    ) => {
+        /** Do something */
+    }
+
+    /**
+     * We don't desctucture objects in method brackets
+     */
+    badExampleFunction = ({
+        param1,
+        param2,
+        param3,
+    }) => {
+        /** Do something */
+    }
+
+    /**
+     * We use prefixes for methods and variables
+     * For handlers we use 'handle' verb prefix
      */
 
-    purchasingHandler = () => {
-        if(!this.props.isAuth){
+    handlePurchase = () => {
+        if (!this.props.isAuth) {
             this.props.onSetAuthRedirectPath(ROUTES.CHECKOUT.LINK);
             this.props.history.push(ROUTES.AUTH.LINK);
         };
         this.setState({ isPurchasing: true })
     }
 
-    purchaseContinuedHandler = () => {
+    handleContinuePurchase = () => {
         this.props.onOrderBurgerInit();
         this.props.history.push(ROUTES.CHECKOUT.LINK);
     };
 
-    purchaseCanceldHandler = () => {
+    handleCancelPurchase = () => {
         this.setState({ isPurchasing: false })
     };
 
-    /**
-     * HELPERS
-     */
-
-    updatePurchaseHandler = (ingredients) => {
+    handleUpdatePurchase = (ingredients) => {
+        /**
+         * We do method chaining with next line after first method
+         */
         const sum = Object.keys(ingredients)
-            .map(ingredient => ingredients[ingredient])
+            .map((ingredient) => ingredients[ingredient])
             .reduce((sum, item) => sum + item, 0);
+
         return sum > 0;
     }
 
-    chckIfDisabled = () => {
+    /**
+     * If method or varaible return boolean shoul be started
+     * with 'is' prefix
+     */
+    isDisabled = () => {
         const disabledInfo = { ...this.props.ingredients };
         for (let ingredient in disabledInfo) {
             disabledInfo[ingredient] = disabledInfo[ingredient] <= 0;
@@ -79,64 +196,115 @@ class BurgerBuilder extends Component {
     }
 
     /**
-     * RENDERERS
+     * Instaed of placing logic responsible for rendering component
+     * use helper method with 'render' prefix in name
      */
-
     renderSummaryModal = () => {
         const {
             ingredients,
             totalPrice
         } = this.props;
 
-        const orderModalProps = {
+        /**
+         * If component has more than 3 props you can place
+         * them in object with 'propsFor' prefix
+         */
+        const propsForOrderModal = {
             ingredients,
             totalPrice,
-            onPurchaseContinue: this.purchaseContinuedHandler,
-            onPurchaseCancel: this.purchaseCanceldHandler
+            onPurchaseContinue: this.handleContinuePurchase,
+            onPurchaseCancel: this.handleCancelPurchase
         }
 
         return (
+            /**
+             * If component has more than one prop
+             * separate them by using next line
+             */
             <Modal
                 isOpen={this.state.isPurchasing}
-                onClose={this.purchaseCanceldHandler}
+                onClose={this.handleCancelPurchase}
             >
-                <OrderModal {...orderModalProps} />
+                <OrderModal {...propsForOrderModal} />
             </Modal>
         )
+    }
+
+    /**
+     * Return component or null
+     */
+    renderApetizers = () => {
+        const {
+            isLoading
+        } = this.state;
+
+        if (!isLoading) {
+            return (
+                <div>
+                    {/* List of apetizers... */}
+                </div>
+            )
+        }
+
+        return null;
     }
 
     renderBurger = () => {
         const {
             ingredients,
             totalPrice,
-            error
+            isError
         } = this.props;
 
-        const burgerProps = {
+        const propsForBurger = {
             ingredients
         }
 
-        const buildControlsProps = {
-            purchasable: this.updatePurchaseHandler(ingredients),
+        /**
+         * When component has more than 3 props use object
+         * to wrap all of them
+         */
+        const propsForBuildControls = {
+            purchasable: this.handleUpdatePurchase(ingredients),
             totalPrice,
-            disabled: this.chckIfDisabled(),
+            disabled: this.isDisabled(),
             onAddIngredient: this.props.onAddIngredient,
             onRemoveIngredient: this.props.onRemoveIngredient,
-            onPurchase: this.purchasingHandler
+            onPurchase: this.handlePurchase
         }
 
+        /**
+         * If return staemen is placed in next line use curlys
+         * brackets to wrapp it
+         */
         if (!ingredients) {
             return <Spinner />
         }
 
+        /**
+         * If ternary expression is short use it as below
+         * otherwise create 'render' prefix helper method
+         */
         return (
             <Aux>
-                {!error ? <Burger {...burgerProps}/> : <p>Error has occured</p>}
-                <BuildControls {...buildControlsProps}/>
+                {!isError
+                    ? <Burger {...propsForBurger} />
+                    : <p>Error has occured</p>
+                }
+                <BuildControls {...propsForBuildControls} />
             </Aux>
         );
     }
 
+    /**
+     * React component render methos should be always at end
+     * of class
+     *
+     * Render method shouls be always clear as much as it is possible
+     *
+     * Instead of destructuring nested state or props use
+     * lodash 'get' method
+     */
     render() {
 
         return (
@@ -148,26 +316,43 @@ class BurgerBuilder extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        ingredients: state.burger.ingredients,
-        totalPrice: state.burger.totalPrice,
-        error: state.burger.error,
-        isAuth: state.auth.token !== null
-    }
-}
+const mapStateToProps = (state) => ({
+    ingredients: state.burger.ingredients,
+    isAuth: state.auth.token !== null,
+    isError: state.burger.error,
+    totalPrice: state.burger.totalPrice,
+})
 
+/**
+ * Use 'bindActionCreators' to wrap all
+ * Action Creators
+ */
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     onAddIngredient,
-    onRemoveIngredient,
-    onOrderBurgerInit,
     onGetIngredientsAPI,
-    onSetAuthRedirectPath
+    onOrderBurgerInit,
+    onRemoveIngredient,
+    onSetAuthRedirectPath,
 }, dispatch);
 
-const BurgerBuilderWithError = withErrorHandler(BurgerBuilder, burgerAPI.burger);
-
-export default connect(
+/**
+ * Use named exports for components
+ *
+ * If component will become container (will be wrapped in connect HOC)
+ * give it 'Component' suffix and export it connected with previous name
+ */
+export const BurgerBuilder = connect(
     mapStateToProps,
     mapDispatchToProps
-)(BurgerBuilderWithError);
+)(BurgerBuilderComponent);
+
+/**
+ * When use HOC assign it first to variable
+ * and export it as named component
+ */
+// const WithErrorBurgerBuilder = withErrorHandler(BurgerBuilderComponent, burgerAPI.burger);
+
+// export const BurgerBuilder = connect(
+//     mapStateToProps,
+//     mapDispatchToProps
+// )(WithErrorBurgerBuilder);
