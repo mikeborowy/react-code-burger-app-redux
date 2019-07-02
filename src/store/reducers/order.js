@@ -16,7 +16,7 @@ export const actionTypes = {
 // Action creators
 export const onOrderBurgerLoading = () => ({ type: actionTypes.ORDER_LOADING });
 export const onOrderBurgerInit = () => ({ type: actionTypes.ORDER_INIT });
-export const onOrderBurgerError = error => ({ type: actionTypes.ORDER_ERR, error });
+export const onOrderBurgerError = (error) => ({ type: actionTypes.ORDER_ERR, error });
 export const onOrderBurgerSet = (orderId, order) => ({
   type: actionTypes.ORDER_SET,
   orderId,
@@ -25,11 +25,11 @@ export const onOrderBurgerSet = (orderId, order) => ({
 
 export const onOrdersLoading = () => ({ type: actionTypes.ORDERS_LOADING });
 export const onOrdersInit = () => ({ type: actionTypes.ORDERS_INIT });
-export const onOrdersError = error => ({ type: actionTypes.ORDERS_ERR, error });
-export const onOrdersSet = orders => ({ type: actionTypes.ORDERS_SET, orders });
+export const onOrdersError = (error) => ({ type: actionTypes.ORDERS_ERR, error });
+export const onOrdersSet = (orders) => ({ type: actionTypes.ORDERS_SET, orders });
 
 // API Action creators
-export const onOrderBurgerSetAPI = (order, token) => async dispatch => {
+export const onOrderBurgerSetAPI = (order, token) => async (dispatch) => {
   dispatch(onOrderBurgerLoading());
   try {
     const response = await burgerAPI.setOrder(order, token);
@@ -40,7 +40,7 @@ export const onOrderBurgerSetAPI = (order, token) => async dispatch => {
   }
 };
 
-export const onOrdersGetAPI = (userId, token) => async dispatch => {
+export const onOrdersGetAPI = (userId, token) => async (dispatch) => {
   dispatch(onOrdersLoading());
   try {
     const response = await burgerAPI.getOrders(userId, token);

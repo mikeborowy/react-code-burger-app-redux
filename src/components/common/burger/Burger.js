@@ -11,14 +11,14 @@ import { INGREDIENTS } from '../../../constants/ingredients';
  */
 
 const propTypes = {
-  ingredients: PropTypes.object.isRequired,
+  ingredients: PropTypes.object,
 };
 
 const defaultProps = {
   ingredients: {},
 };
 
-export const Burger = props => {
+export const Burger = (props) => {
   const { ingredients } = props;
 
   /**
@@ -39,10 +39,10 @@ export const Burger = props => {
   //     ))
   //     .reduce((acc, item) => [...acc, ...item], []);
 
-  const renderIngredients = ingredientKey => {
-    return [...Array(ingredients[ingredientKey])].map((_, idx) => (
-      <Ingredient key={`${ingredientKey}_${idx}`} type={ingredientKey} />
-    ));
+  const renderIngredients = (ingredientKey) => {
+    return [...Array(ingredients[ingredientKey])].map((_, idx) => {
+      return <Ingredient key={`${ingredientKey}_${idx * Math.random()}`} type={ingredientKey} />;
+    });
   };
 
   const renderContent = () => {
@@ -51,8 +51,12 @@ export const Burger = props => {
     }
 
     return Object.keys(ingredients)
-      .map(ingredient => renderIngredients(ingredient))
-      .reduce((acc, item) => [...acc, ...item], []);
+      .map((ingredient) => {
+        return renderIngredients(ingredient);
+      })
+      .reduce((acc, item) => {
+        return [...acc, ...item];
+      }, []);
   };
 
   return (

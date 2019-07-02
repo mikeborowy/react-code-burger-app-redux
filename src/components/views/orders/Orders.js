@@ -1,54 +1,66 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Order from './Order/Order';
 import Spinner from '../../common/spinner/Spinner';
-import {
-    onOrdersGetAPI,
-} from '../../../store/reducers/order';
+import { onOrdersGetAPI } from '../../../store/reducers/order';
 
-class Orders extends Component {
+const propTypes = {
+  onOrdersGetAPI: PropTypes.func,
+  userId: PropTypes.number,
+  token: PropTypes.string,
+};
 
-    componentDidMount() {
-        this.props.onOrdersGetAPI(this.props.userId, this.props.token);
+const defaultProps = {
+  onOrdersGetAPI: () => {},
+  userId: 0,
+  token: '',
+};
+
+export class OrdersComponent extends Component {
+  componentDidMount() {
+    const { onOrdersGetAPI, userId, token } = this.props;
+    onOrdersGetAPI(userId, token);
+  }
+
+  renderOrders = () => {
+    const { isLoading, orders } = this.props;
+    if (isLoading) {
+      return <Spinner />;
     }
+    return orders.map((order) => {
+      return <Order key={order.id} ingredients={order.ingredients} totalPrice={order.totalPrice} />;
+    });
+  };
 
-    renderOrders = () => {
-        if(this.props.isLoading) {
-            return <Spinner />
-        }
-
-        return this.props.orders.map(order => (
-            <Order
-                key={order.id}
-                ingredients={order.ingredients}
-                totalPrice={order.totalPrice} />
-        ))
-    }
-
-    render() {
-        return (
-            <div>
-                {this.renderOrders()}
-            </div>
-        );
-    }
+  render() {
+    return <div>{this.renderOrders()}</div>;
+  }
 }
 
-const mapStateToProps = state => {
-    return {
-        isLoading: state.order.isLoading,
-        orders: state.order.orders,
-        token: state.auth.token || localStorage.getItem('token'),
-        userId: state.auth.userId || localStorage.getItem('userId')
-    }
-}
+OrdersComponent.propTypes = propTypes;
+OrdersComponent.defaultProps = defaultProps;
 
-const mapDispatchToState = dispatch => bindActionCreators({
-    onOrdersGetAPI
-}, dispatch)
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.order.isLoading,
+    orders: state.order.orders,
+    token: state.auth.token || localStorage.getItem('token'),
+    userId: state.auth.userId || localStorage.getItem('userId'),
+  };
+};
 
-export default connect(
+const mapDispatchToState = (dispatch) => {
+  return bindActionCreators(
+    {
+      onOrdersGetAPI,
+    },
+    dispatch
+  );
+};
+
+export const Orders = connect(
   mapStateToProps,
   mapDispatchToState
-)(Orders);
+)(OrdersComponent);

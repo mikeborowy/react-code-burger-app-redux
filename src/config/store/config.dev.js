@@ -12,6 +12,6 @@ export const config = () =>
     rootReducers,
     compose(
       applyMiddleware(reduxThunk, reduxPromise, async, logger),
-      window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : fn => fn,
-    ),
+      window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (fn) => fn
+    )
   );

@@ -12,5 +12,5 @@ ReactDOM.render(
   //      <App />
   // </Root>
   <AppWithStore />,
-  document.getElementById('root'),
+  document.getElementById('root')
 );

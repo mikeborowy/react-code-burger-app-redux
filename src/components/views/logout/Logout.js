@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { onLogout } from '../../../store/reducers/auth';
 
-class Logout extends Component {
+class LogoutComponent extends Component {
   componentDidMount() {
-    this.props.onLogout();
+    const { onLogout } = this.props;
+    onLogout();
   }
 
   render() {
@@ -14,15 +15,16 @@ class Logout extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
     {
       onLogout,
     },
-    dispatch,
+    dispatch
   );
+};
 
-export default connect(
+export const Logout = connect(
   null,
-  mapDispatchToProps,
-)(Logout);
+  mapDispatchToProps
+)(LogoutComponent);

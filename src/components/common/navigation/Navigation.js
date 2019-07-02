@@ -4,9 +4,10 @@ import classes from './navigation.scss';
 import NavigationItem from './navigationItem/NavigationItem';
 import { ROUTES } from '../../../constants/routes';
 
-const NavigationComponent = props => {
+const NavigationComponent = (props) => {
+  const { isAuth } = props;
   const renderAuth = () => {
-    if (props.isAuth) {
+    if (isAuth) {
       return (
         <Fragment>
           <NavigationItem link={ROUTES.ORDERS.LINK}>{ROUTES.ORDERS.NAME}</NavigationItem>
@@ -27,7 +28,7 @@ const NavigationComponent = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isAuth: state.auth.token !== null,
   };

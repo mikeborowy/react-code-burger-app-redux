@@ -10,12 +10,12 @@ const google = axios.create({
   baseURL: 'https://www.googleapis.com/',
 });
 
-const signUp = authData => {
+const signUp = (authData) => {
   const action = `identitytoolkit/v3/relyingparty/${GOOGLE.SIGN_UP}?key=${GOOGLE.KEY}`;
   return google.post(action, authData);
 };
 
-const signIn = authData => {
+const signIn = (authData) => {
   const action = `identitytoolkit/v3/relyingparty/${GOOGLE.SING_IN}?key=${GOOGLE.KEY}`;
   return google.post(action, authData);
 };

@@ -1,9 +1,11 @@
 import * as _ from 'lodash';
 import { withAsync } from '../hoc/withAsync/withAsync';
 
-const load = (name) => withAsync(
-    () => import(`../../components/views/${_.camelCase(name)}/${name}`)
-)(name);
+const load = (name) => {
+  return withAsync(() => {
+    return import(`../../components/views/${_.camelCase(name)}/${name}`);
+  })(name);
+};
 
 export const SharedLayout = load('SharedLayout');
 export const Auth = load('Auth');

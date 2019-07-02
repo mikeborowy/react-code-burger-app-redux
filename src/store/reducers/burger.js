@@ -11,22 +11,22 @@ export const actionTypes = {
 };
 
 // Action creators
-export const onAddIngredient = ingredientName => ({
+export const onAddIngredient = (ingredientName) => ({
   type: actionTypes.BURGER_ADD_INGREDIENT,
   ingredientName,
 });
-export const onRemoveIngredient = ingredientName => ({
+export const onRemoveIngredient = (ingredientName) => ({
   type: actionTypes.BURGER_REMOVE_INGREDIENT,
   ingredientName,
 });
-export const onSetIngredients = ingredients => ({
+export const onSetIngredients = (ingredients) => ({
   type: actionTypes.BURGER_SET_INGREDIENTS,
   ingredients,
 });
 export const onIngredientsError = () => ({ type: actionTypes.BURGER_INGREDIENTS_ERR });
 
 // API Action creators
-export const onGetIngredientsAPI = () => async dispatch => {
+export const onGetIngredientsAPI = () => async (dispatch) => {
   try {
     const response = await burgerAPI.getIngredients();
     dispatch(onSetIngredients(response.data));

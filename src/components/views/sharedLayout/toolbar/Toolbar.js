@@ -4,9 +4,8 @@ import Logo from '../../../common/logo/Logo';
 import Navigation from '../../../common/navigation/Navigation';
 import MenuButton from '../../../common/buttons/menuButton/MenuButton';
 
-export const Toolbar = props => {
+export const Toolbar = (props) => {
   const { onSideMenuToggle } = props;
-
   const { toolbar, logo, desktopOnly } = styles;
 
   return (

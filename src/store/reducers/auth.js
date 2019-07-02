@@ -10,23 +10,23 @@ export const actionTypes = {
 
 /** Action Creators */
 export const onAuthStart = () => ({ type: actionTypes.AUTH_START });
-export const onAuthSuccess = authData => ({ type: actionTypes.AUTH_SUCCESS, authData });
-export const onAuthFail = error => ({ type: actionTypes.AUTH_FAIL, error });
+export const onAuthSuccess = (authData) => ({ type: actionTypes.AUTH_SUCCESS, authData });
+export const onAuthFail = (error) => ({ type: actionTypes.AUTH_FAIL, error });
 export const onAuthLogout = () => ({ type: actionTypes.AUTH_LOGOUT });
 
-export const onLogout = () => dispatch => {
+export const onLogout = () => (dispatch) => {
   clearStorage();
   dispatch(onAuthLogout());
 };
-export const onCheckAuthTimeout = expirationTime => dispatch => {
+export const onCheckAuthTimeout = (expirationTime) => (dispatch) => {
   setTimeout(() => {
     dispatch(onLogout());
   }, expirationTime * 1000);
 };
 
-export const onSetAuthRedirectPath = path => ({ type: actionTypes.SET_AUTH_REDIRECT_PATH, path });
+export const onSetAuthRedirectPath = (path) => ({ type: actionTypes.SET_AUTH_REDIRECT_PATH, path });
 export const onAuthCheckState = () => {
-  return dispatch => {
+  return (dispatch) => {
     const token = localStorage.getItem('token');
     if (!token) {
       dispatch(onLogout());
@@ -44,7 +44,7 @@ export const onAuthCheckState = () => {
 };
 
 /** API Action Creators */
-export const onAuthStartAPI = (email, password, isSignup) => async dispatch => {
+export const onAuthStartAPI = (email, password, isSignup) => async (dispatch) => {
   dispatch(onAuthStart());
   const authData = {
     email,

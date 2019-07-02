@@ -1,14 +1,13 @@
 import React from 'react';
 import styles from './button.scss';
 
-const ModalButton = props => {
-  const className = [styles.button, styles[props.type]].join(' ');
+export const ModalButton = (props) => {
+  const { type, onClick, children } = props;
+  const className = [styles.button, styles[type]].join(' ');
 
   return (
-    <button className={className} onClick={props.onClick}>
-      {props.children}
+    <button className={className} onClick={onClick} type="button">
+      {children}
     </button>
   );
 };
-
-export default ModalButton;

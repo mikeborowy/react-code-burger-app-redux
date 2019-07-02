@@ -1,18 +1,18 @@
 import React from 'react';
 import styles from './order.scss';
 
-const Order = props => {
+export const Order = (props) => {
   const renderIngredients = () => {
     const ingredients = [];
 
-    for (let ingredientName in props.ingredients) {
+    for (const ingredientName in props.ingredients) {
       ingredients.push({
         name: ingredientName,
         amount: props.ingredients[ingredientName],
       });
     }
 
-    return ingredients.map(ig => {
+    return ingredients.map((ig) => {
       const style = {
         textTransform: 'capitalize',
         display: 'inline-block',
@@ -31,18 +31,17 @@ const Order = props => {
           {ig.name} ({ig.amount})
         </span>
       );
-    };
-
+    });
   };
+
+  const { totalPrice } = props;
 
   return (
     <div className={styles.order}>
       <p>Ingredients: {renderIngredients()}</p>
       <p>
-        Price: <strong>USD {Number.parseFloat(props.totalPrice).toFixed(2)}</strong>
+        Price: <strong>USD {Number.parseFloat(totalPrice).toFixed(2)}</strong>
       </p>
     </div>
   );
 };
-
-export default Order;

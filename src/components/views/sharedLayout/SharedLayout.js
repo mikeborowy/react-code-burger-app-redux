@@ -6,45 +6,45 @@ import Toolbar from './toolbar/Toolbar';
 import SideMenu from './sideMenu/SideMenu';
 
 const propTypes = {
-    children: PropTypes.object.isRequired
+  children: PropTypes.object,
 };
 
 const defaultProps = {
-    children: {}
+  children: {},
 };
 
-class SharedLayout extends Component {
+export class SharedLayout extends Component {
+  state = {
+    showSideMenu: false,
+  };
 
-    state = {
-        showSideMenu: false
-    }
+  sideMenuCloseHandler = () => {
+    this.setState({
+      showSideMenu: false,
+    });
+  };
 
-    sideMenuCloseHandler = () => {
-        this.setState({ showSideMenu: false });
-    }
+  sideMenuToggleHandler = () => {
+    this.setState((prevState) => {
+      return {
+        showSideMenu: !prevState.showSideMenu,
+      };
+    });
+  };
 
-    sideMenuToggleHandler = () => {
-        this.setState(prevState => ({ showSideMenu: !prevState.showSideMenu }));
-    }
+  render() {
+    const { children } = this.props;
+    const { showSideMenu } = this.state;
 
-    render() {
-        return (
-            <Aux>
-                <Toolbar onSideMenuToggle={this.sideMenuToggleHandler}
-                />
-                <SideMenu
-                    open={this.state.showSideMenu}
-                    onClose={this.sideMenuCloseHandler}
-                />
-                <main className={styles.main}>
-                    {this.props.children}
-                </main>
-            </Aux>
-        );
-    }
-};
+    return (
+      <Aux>
+        <Toolbar onSideMenuToggle={this.sideMenuToggleHandler} />
+        <SideMenu open={showSideMenu} onClose={this.sideMenuCloseHandler} />
+        <main className={styles.main}>{children}</main>
+      </Aux>
+    );
+  }
+}
 
 SharedLayout.propTypes = propTypes;
 SharedLayout.defaultProps = defaultProps;
-
-export default SharedLayout;

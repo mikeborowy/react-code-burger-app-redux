@@ -3,13 +3,22 @@ import Aux from '../../../hoc/aux/Aux';
 import Button from '../../../common/buttons/button/Button';
 import { BUTTONS } from '../../../../constants/buttons';
 
-const OrderSummary = props => {
-  const renderSummaryList = Object.keys(props.ingredients).map((ingredient, idx) => (
-    <li key={`ing-${idx}`}>
-      <span style={{ textTransform: 'capitalize' }}>{ingredient}:</span>
-      {` ${props.ingredients[ingredient]}`}
-    </li>
-  ));
+export const OrderSummary = (props) => {
+  const { ingredients, totalPrice, onPurchaseContinue, onPurchaseCancel } = props;
+  const renderSummaryList = Object.keys(ingredients).map((ingredient, idx) => {
+    return (
+      <li key={`ing-${idx * Math.random()}`}>
+        <span
+          style={{
+            textTransform: 'capitalize',
+          }}
+        >
+          {ingredient}:
+        </span>
+        {` ${ingredients[ingredient]}`}
+      </li>
+    );
+  });
 
   return (
     <Aux>
@@ -17,17 +26,15 @@ const OrderSummary = props => {
       <p>A delicious burger with:</p>
       <ul>{renderSummaryList}</ul>
       <p>
-        <strong>Total Price: {props.totalPrice.toFixed(2)}</strong>
+        <strong>Total Price: {totalPrice.toFixed(2)}</strong>
       </p>
       <p>Continue to checkout?</p>
-      <Button type={BUTTONS.DANGER} onClick={props.onPurchaseCancel}>
+      <Button type={BUTTONS.DANGER} onClick={onPurchaseCancel}>
         Cancel
       </Button>
-      <Button type={BUTTONS.SUCCESS} onClick={props.onPurchaseContinue}>
+      <Button type={BUTTONS.SUCCESS} onClick={onPurchaseContinue}>
         Continue
       </Button>
     </Aux>
   );
 };
-
-export default OrderSummary;

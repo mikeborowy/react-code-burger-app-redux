@@ -3,20 +3,33 @@ import styles from './buildControls.scss';
 import BuilderControl from './buildControl/BuildControl';
 import { BUILD_CONTROLS } from '../../../../constants/controls';
 
-const BuildControls = props => {
+export const BuildControls = (props) => {
+  const {
+    purchasable,
+    onPurchase,
+    totalPrice,
+    disabled,
+    onAddIngredient,
+    onRemoveIngredient,
+  } = props;
+
   const orderBtnProps = {
     className: styles.orderButton,
-    disabled: !props.purchasable,
-    onClick: props.onPurchase,
+    disabled: !purchasable,
+    onClick: onPurchase,
   };
 
-  const renderControls = BUILD_CONTROLS.map(control => {
+  const renderControls = BUILD_CONTROLS.map((control) => {
     const buildControlProps = {
       key: control.label,
       label: control.label,
-      disabled: props.disabled[control.type],
-      onAddIngredient: () => props.onAddIngredient(control.type),
-      onRemoveIngredient: () => props.onRemoveIngredient(control.type),
+      disabled: disabled[control.type],
+      onAddIngredient: () => {
+        return onAddIngredient(control.type);
+      },
+      onRemoveIngredient: () => {
+        return onRemoveIngredient(control.type);
+      },
     };
 
     return <BuilderControl {...buildControlProps} />;
@@ -26,12 +39,12 @@ const BuildControls = props => {
     <div className={styles.buildControls}>
       <p>
         Current price:
-        <strong>{props.totalPrice.toFixed(2)}</strong>
+        <strong>{totalPrice.toFixed(2)}</strong>
       </p>
       {renderControls}
-      <button {...orderBtnProps}>ORDER NOW</button>
+      <button type="button" {...orderBtnProps}>
+        ORDER NOW
+      </button>
     </div>
   );
 };
-
-export default BuildControls;

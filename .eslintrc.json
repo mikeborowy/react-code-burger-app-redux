@@ -53,6 +53,7 @@
     "no-debugger": "error",
     "no-lone-blocks": "warn",
     "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
+    "no-prototype-builtins": "warn",
     "no-shadow": "warn",
     "no-restricted-syntax": [
       "error",
@@ -65,7 +66,7 @@
     "no-var": "error",
     "object-property-newline": "warn",
     "object-curly-newline": [
-      "error",
+      "warn",
       {
         "ObjectExpression": {
           "multiline": true,
@@ -105,7 +106,9 @@
       "always"
     ],
     "jsx-quotes": "warn",
+    "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/href-no-hash": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
     "jsx-a11y/label-has-associated-control": "off",
     "react/display-name": [
       "warn",

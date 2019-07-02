@@ -1,4 +1,4 @@
-export const async = ({ dispatch }) => next => action => {
+export const async = ({ dispatch }) => (next) => (action) => {
   /**
    * check to seeif the action has a
    * promise on it's'payload' property.
@@ -15,7 +15,7 @@ export const async = ({ dispatch }) => next => action => {
    * (get its data) and create new action
    * with that data and dispatch it
    */
-  action.payload.then(response => {
+  action.payload.then((response) => {
     const newAction = { ...action, payload: response };
     dispatch(newAction);
   });

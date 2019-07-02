@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import getDisplayName from '../../helpers/grtDispalyName';
+import { getDisplayName } from '../../../helpers/index';
 
-const withAux = WrappedComponent => {
+export const withAux = (WrappedComponent) => {
   class WithAux extends Component {
     render() {
       return <WrappedComponent {...this.props} {...this.state} />;
@@ -12,5 +12,3 @@ const withAux = WrappedComponent => {
 
   return WithAux;
 };
-
-export default withAux;

@@ -1,14 +1,13 @@
 import React from 'react';
 import classes from './menuButton.scss';
 
-const MenuButton = props => {
+export const MenuButton = (props) => {
+  const { onToggle } = props;
   return (
-    <div className={classes.menuButton} onClick={props.onToggle}>
+    <div className={classes.menuButton} onClick={onToggle}>
       <div />
       <div />
       <div />
     </div>
   );
 };
-
-export default MenuButton;

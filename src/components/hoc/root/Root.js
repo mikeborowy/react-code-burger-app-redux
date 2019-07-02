@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import configStore from '../../../config/store';
 
 const propTypes = {
-  children: PropTypes.object.isRequired,
-  initialState: PropTypes.object.isRequired,
+  children: PropTypes.object,
+  initialState: PropTypes.object,
 };
 
 const defaultProps = {
@@ -13,8 +13,9 @@ const defaultProps = {
   initialState: {},
 };
 
-export const Root = props => {
-  return <Provider store={configStore(props.initialState)}>{props.children}</Provider>;
+export const Root = (props) => {
+  const { initialState, children } = props;
+  return <Provider store={configStore(initialState)}>{children}</Provider>;
 };
 
 Root.propTypes = propTypes;

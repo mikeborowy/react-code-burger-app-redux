@@ -1,62 +1,66 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import CheckoutSummary from './checkoutSummary/CheckoutSummary';
 import ContactData from './contactData/ContactData';
 import { ROUTES } from '../../../constants/routes';
 
-class Checkout extends Component {
+const propTypes = {
+  history: PropTypes.shape({}),
+};
+const defaultProps = {
+  history: {},
+};
 
-    checkoutContinueHandler = () => {
-        this.props.history.replace(`${ROUTES.CHECKOUT.LINK}${ROUTES.CONTACT_DATA.LINK}`);
+class CheckoutComponent extends Component {
+  checkoutContinueHandler = () => {
+    const { history } = this.props;
+    history.replace(`${ROUTES.CHECKOUT.LINK}${ROUTES.CONTACT_DATA.LINK}`);
+  };
+
+  checkoutCancelHandler = () => {
+    const { history } = this.props;
+    history.goBack();
+  };
+
+  renderSummary() {
+    const { ingredients, isPurchased, match } = this.props;
+    if (ingredients) {
+      if (isPurchased) {
+        return <Redirect to={ROUTES.BUILDER.LINK} />;
+      }
+
+      return (
+        <Fragment>
+          <CheckoutSummary
+            ingredients={ingredients}
+            onCheckoutContinue={this.checkoutContinueHandler}
+            onCheckoutCancel={this.checkoutCancelHandler}
+          />
+          <Route path={match.path + ROUTES.CONTACT_DATA.LINK} component={ContactData} />
+        </Fragment>
+      );
     }
+    return <Redirect to={ROUTES.BUILDER.LINK} />;
+  }
 
-    checkoutCancelHandler = () => {
-        this.props.history.goBack();
-    }
-
-    renderSummary() {
-        if (this.props.ingredients) {
-
-            if (this.props.isPurchased) {
-                return <Redirect to={ROUTES.BUILDER.LINK} />
-            }
-
-            return (
-                <Fragment>
-                    <CheckoutSummary
-                        ingredients={this.props.ingredients}
-                        onCheckoutContinue={this.checkoutContinueHandler}
-                        onCheckoutCancel={this.checkoutCancelHandler}
-                    />
-                    <Route
-                        path={this.props.match.path + ROUTES.CONTACT_DATA.LINK}
-                        component={ContactData}
-                    />
-                </Fragment>
-            );
-        }
-        return <Redirect to={ROUTES.BUILDER.LINK} />
-    }
-
-    render() {
-        return (
-            <div>
-                {this.renderSummary()}
-            </div>
-        );
-    }
+  render() {
+    return <div>{this.renderSummary()}</div>;
+  }
 }
+
+CheckoutComponent.propTypes = propTypes;
+CheckoutComponent.defaultProps = defaultProps;
 
 const mapStateToProps = (state) => {
-    console.log(state)
-    return {
-        ingredients: state.burger.ingredients,
-        isPurchased: state.order.isPurchased
-    }
-}
+  return {
+    ingredients: state.burger.ingredients,
+    isPurchased: state.order.isPurchased,
+  };
+};
 
-export default connect(
-    mapStateToProps,
-    null
-)(Checkout);
+export const Checkout = connect(
+  mapStateToProps,
+  null
+)(CheckoutComponent);

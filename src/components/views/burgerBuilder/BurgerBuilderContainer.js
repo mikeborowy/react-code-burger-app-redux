@@ -13,7 +13,7 @@ import { onOrderBurgerInit } from '../../../store/reducers/order';
 import { onSetAuthRedirectPath } from '../../../store/reducers/auth';
 import { BurgerBuilder } from './BurgerBuilder';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     ingredients: state.burger.ingredients,
     totalPrice: state.burger.totalPrice,
@@ -22,8 +22,8 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
     {
       onAddIngredient,
       onRemoveIngredient,
@@ -31,10 +31,11 @@ const mapDispatchToProps = dispatch =>
       onGetIngredientsAPI,
       onSetAuthRedirectPath,
     },
-    dispatch,
+    dispatch
   );
+};
 
-export default connect(
+export const BurgerBuilderContainer = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(BurgerBuilder);

@@ -2,22 +2,32 @@ import React from 'react';
 import styles from './input.scss';
 import { INPUTS } from '../../../constants/inputs';
 
-const Input = props => {
+export const Input = (props) => {
+  const {
+    touched,
+    shouldValidate,
+    invalid,
+    label,
+    elementType,
+    elementConfig,
+    value,
+    onChange,
+  } = props;
   let inputElement = null;
   const inputClasses = [styles.inputElement];
 
-  if (props.invalid && props.shouldValidate && props.touched) {
+  if (invalid && shouldValidate && touched) {
     inputClasses.push(styles.invalid);
   }
 
-  switch (props.elementType) {
+  switch (elementType) {
     case INPUTS.INPUT:
       inputElement = (
         <input
           className={inputClasses.join(' ')}
-          {...props.elementConfig}
-          value={props.value}
-          onChange={props.onChange}
+          {...elementConfig}
+          value={value}
+          onChange={onChange}
         />
       );
       break;
@@ -25,20 +35,22 @@ const Input = props => {
       inputElement = (
         <textarea
           className={inputClasses.join(' ')}
-          {...props.elementConfig}
-          value={props.value}
-          onChange={props.onChange}
+          {...elementConfig}
+          value={value}
+          onChange={onChange}
         />
       );
       break;
     case INPUTS.SELECT:
       inputElement = (
-        <select className={inputClasses.join(' ')} value={props.value} onChange={props.onChange}>
-          {props.elementConfig.options.map(option => (
-            <option key={option.value} value={option.value}>
-              {option.displayValue}
-            </option>
-          ))}
+        <select className={inputClasses.join(' ')} value={value} onChange={onChange}>
+          {elementConfig.options.map((option) => {
+            return (
+              <option key={option.value} value={option.value}>
+                {option.displayValue}
+              </option>
+            );
+          })}
         </select>
       );
       break;
@@ -46,19 +58,19 @@ const Input = props => {
       inputElement = (
         <input
           className={inputClasses.join(' ')}
-          {...props.elementConfig}
-          value={props.value}
-          onChange={props.onChange}
+          {...elementConfig}
+          value={value}
+          onChange={onChange}
         />
       );
   }
 
   return (
     <div className={styles.input}>
-      <label className={styles.label}>{props.label}</label>
+      <label className={styles.label} htmlFor={inputElement.name}>
+        {label}
+      </label>
       {inputElement}
     </div>
   );
 };
-
-export default Input;
