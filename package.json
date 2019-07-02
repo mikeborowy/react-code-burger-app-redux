@@ -53,6 +53,18 @@
     "lint": "eslint 'src/**/*.{js,jsx}' --fix",
     "lint-w": "esw -w 'src/**/*.{js,jsx}'"
   },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "prettier-eslint --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
@@ -104,6 +116,8 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.2",
     "eslint-watch": "^5.1.2",
+    "husky": "^3.0.0",
+    "lint-staged": "^9.0.0",
     "prettier": "^1.18.2"
   }
 }

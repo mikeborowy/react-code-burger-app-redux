@@ -1,4 +1,14 @@
 {
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
   "extends": [
     "airbnb",
     "plugin:prettier/recommended",
@@ -12,38 +22,14 @@
     "node": true
   },
   "rules": {
-    "react/jsx-filename-extension": [
-      "warn",
-      {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
-      }
-    ],
-    "react/prop-types": "warn",
-    "jsx-a11y/href-no-hash": [
-      "off"
-    ],
-    "jsx-a11y/label-has-associated-control": [
-      "off"
-    ],
-    "jsx-quotes": "warn",
+    "arrowParens": "always",
     "consistent-return": "off",
+    "eol-last": "warn",
+    "guard-for-in": "off",
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",
-    "eol-last": "off",
-    "no-console": "error",
-    "no-debugger": "error",
-    "no-var": "error",
-    "no-trailing-spaces": "warn",
-    "no-unused-vars": "warn",
-    "no-underscore-dangle": "warn",
-    "no-alert": "warn",
-    "no-lone-blocks": "warn",
-    "no-use-before-define": "warn",
     "max-len": [
-      "warn",
+      "error",
       {
         "code": 100,
         "tabWidth": 2,
@@ -56,6 +42,22 @@
         "ignoreRegExpLiterals": true
       }
     ],
+    "no-alert": "error",
+    "no-console": "error",
+    "no-debugger": "error",
+    "no-lone-blocks": "warn",
+    "no-restricted-syntax": [
+      "error",
+      "BinaryExpression[operator='in']"
+    ],
+    "no-shadow": "warn",
+    "no-trailing-spaces": "warn",
+    "no-unused-vars": "warn",
+    "no-underscore-dangle": "warn",
+    "no-use-before-define": "warn",
+    "no-var": "error",
+    "object-property-newline": "warn",
+    "object-curly-newline": "warn",
     "prefer-destructuring": [
       "error",
       {
@@ -72,6 +74,13 @@
         "enforceForRenamedProperties": false
       }
     ],
+    "semi": [
+      "warn",
+      "always"
+    ],
+    "jsx-quotes": "warn",
+    "jsx-a11y/href-no-hash": "off",
+    "jsx-a11y/label-has-associated-control": "off",
     "react/display-name": [
       "warn",
       {
@@ -86,9 +95,17 @@
         ]
       }
     ],
-    "semi": [
-      1,
-      "always"
-    ]
+    "react/jsx-boolean-value": "warn",
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "react/prop-types": "warn",
+    "react/sort-comp": "off"
   }
 }
